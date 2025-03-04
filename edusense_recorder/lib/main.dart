@@ -57,22 +57,12 @@ class _RecorderHomeState extends State<RecorderHome> {
   Future<void> _startRecording() async {
     try {
       final tempDir = await getTemporaryDirectory();
-      // Ensure directory exists
-      if (!await tempDir.exists()) {
-        await tempDir.create(recursive: true);
-      }
-      
-      _filePath = '${tempDir.path}/lecture_${DateTime.now().millisecondsSinceEpoch}.wav';
+      _filePath = '${tempDir.path}/lecture_${DateTime.now().millisecondsSinceEpoch}.aac';
       print('Starting recording to: $_filePath');
 
-      // Verify writable directory
-      final testFile = File('${tempDir.path}/test.txt');
-      await testFile.writeAsString('test');
-      await testFile.delete();
-      
       await _recorder!.startRecorder(
         toFile: _filePath,
-        codec: Codec.pcm16WAV,
+        codec: Codec.aacADTS,
         sampleRate: 16000,
         numChannels: 1,
         audioSource: AudioSource.microphone,
@@ -81,57 +71,34 @@ class _RecorderHomeState extends State<RecorderHome> {
     } catch (e) {
       _showSnackBar("Recording initialization failed: ${e.toString()}");
       print('Recording start error: $e');
-      if (e is PathNotFoundException) {
-        print('Path access error: ${e.message}');
-      }
     }
   }
 
   Future<void> _stopRecording() async {
     try {
-      // 1. Get current path before stopping
       final recordingPath = _filePath;
-      
-      // 2. Stop the recorder and wait for native completion
       await _recorder!.stopRecorder();
       
-      // 3. Add extended delay for Android audio subsystem
-      await Future.delayed(const Duration(seconds: 3));
-
-      // 4. Verify file integrity
+      await Future.delayed(const Duration(seconds: 1));
+      
       final file = File(recordingPath);
       if (!await file.exists()) {
-        _showSnackBar("File not created - check storage permissions");
-        print('File missing at: $recordingPath');
+        _showSnackBar("File not created");
         return;
       }
 
-      // 5. Validate WAV header
-      try {
-        final header = await file.openRead(0, 4).first;
-        if (String.fromCharCodes(header) != 'RIFF') {
-          _showSnackBar("Invalid audio format");
-          await file.delete();
-          return;
-        }
-      } catch (e) {
-        print('Header read error: $e');
-      }
-
-      // 6. Final validation
       final size = await file.length();
-      print('Validated recording: $size bytes');
+      print('Final file size: $size bytes');
       
-      if (size > 1024) {
-        setState(() => _isRecording = false);
-        _showSnackBar("Recording saved successfully");
-      } else {
+      if (size < 1024) {
         await file.delete();
-        _showSnackBar("Recording failed - invalid file");
+        _showSnackBar("Recording failed - empty file");
+      } else {
+        setState(() => _isRecording = false);
+        _showSnackBar("Recording saved: ${size ~/ 1024}KB");
       }
     } catch (e) {
-      _showSnackBar("Recording finalization error: ${e.toString()}");
-      print('Stop recording exception: $e');
+      _showSnackBar("Finalization error: ${e.toString()}");
     }
   }
 

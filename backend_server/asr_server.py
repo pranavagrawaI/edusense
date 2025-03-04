@@ -12,7 +12,7 @@ limiter = Limiter(app)
 
 # Constants
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
-ALLOWED_EXTENSIONS = {'wav', 'mp3', 'ogg', 'flac'}
+ALLOWED_EXTENSIONS = {'wav', 'mp3', 'ogg', 'flac', 'aac'}
 MAX_FILE_SIZE = 16 * 1024 * 1024  # 16MB
 
 # Initialize once at startup
@@ -29,7 +29,7 @@ def validate_upload_file(file) -> Tuple[Dict, int] | None:
         return {"error": "Empty filename"}, 400
         
     if not allowed_file(file.filename):
-        return {"error": "Invalid file type"}, 400
+        return {"error": f"Invalid file type. Allowed: {', '.join(ALLOWED_EXTENSIONS)}"}, 400
 
     file.seek(0, os.SEEK_END)
     if file.tell() > MAX_FILE_SIZE:
@@ -62,36 +62,47 @@ def transcribe():
         if not os.access(file_path, os.R_OK):
             app.logger.error("File not readable after saving")
 
-        # Verify WAV header
-        with open(file_path, 'rb') as f:
-            if f.read(4) != b'RIFF':
-                raise ValueError("Invalid WAV header")
-
-        # Replace wave validation with FFmpeg
+        # Convert to WAV using FFmpeg if needed
+        converted_path = os.path.join(UPLOAD_FOLDER, "converted.wav")
         try:
+            ffmpeg_cmd = [
+                'ffmpeg', '-y', '-i', file_path,
+                '-acodec', 'pcm_s16le', '-ar', '16000', '-ac', '1',
+                converted_path,
+                '-hide_banner', '-loglevel', 'error'
+            ]
             result = subprocess.run(
-                ['ffmpeg', '-i', file_path, '-hide_banner', '-loglevel', 'error'],
+                ffmpeg_cmd,
                 stderr=subprocess.PIPE,
                 text=True
             )
             if result.returncode != 0:
-                raise ValueError(f"FFmpeg error: {result.stderr}")
+                raise ValueError(f"FFmpeg conversion failed: {result.stderr}")
         except Exception as e:
             return jsonify({"error": str(e)}), 400
-        
-        # Process transcription directly (no conversion needed)
-        abs_path = os.path.abspath(file_path)
-        result = model.transcribe(abs_path)
+
+        # Process transcription from converted file
+        abs_path = os.path.abspath(converted_path)
+        result = model.transcribe(
+            abs_path,
+            language='en',  # Force English detection
+            fp16=False  # Better compatibility
+        )
         transcription = result.get("text", "").strip()
 
         return jsonify({"transcription": transcription})
         
     except Exception as e:
-        app.logger.error(f"Audio validation failed: {str(e)}")
-        return jsonify({"error": f"Invalid audio file: {str(e)}"}), 400
+        app.logger.error(f"Processing failed: {str(e)}")
+        return jsonify({"error": f"Processing error: {str(e)}"}), 500
     finally:
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        # Clean up both files
+        for path in [file_path, converted_path]:
+            if path and os.path.exists(path):
+                try:
+                    os.remove(path)
+                except Exception as e:
+                    app.logger.warning(f"Failed to clean up {path}: {str(e)}")
 
 if __name__ == '__main__':
     if not os.access(UPLOAD_FOLDER, os.W_OK):
