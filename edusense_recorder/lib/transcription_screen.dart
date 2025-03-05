@@ -63,6 +63,10 @@ class _TranscriptionScreenState extends State<TranscriptionScreen> {
     });
   }
 
+  void _saveAndExit() {
+    Navigator.pop(context, _transcription);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,9 +87,18 @@ class _TranscriptionScreenState extends State<TranscriptionScreen> {
                 ),
               ),
             if (!_isLoading)
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('New Recording'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    onPressed: _saveAndExit,
+                    child: const Text('Save & Exit'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Discard'),
+                  ),
+                ],
               ),
           ],
         ),
