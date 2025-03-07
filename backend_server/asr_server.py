@@ -116,7 +116,6 @@ def transcribe():
             with sqlite3.connect(DB_PATH) as conn:
                 conn.execute("INSERT INTO transcripts (text, filename) VALUES (?, ?)",
                            (transcription, filename))
-
         return jsonify({"transcription": transcription})
 
     except Exception as e:
