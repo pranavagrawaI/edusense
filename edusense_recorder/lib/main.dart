@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:audio_session/audio_session.dart';
-import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 
 import 'transcription_screen.dart';
 
@@ -37,7 +36,7 @@ void onStart(ServiceInstance service) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize background service first
   final service = FlutterBackgroundService();
   await service.configure(
@@ -56,9 +55,8 @@ void main() async {
     ),
   );
 
-  // Then initialize alarm manager
   await AndroidAlarmManager.initialize();
-  
+
   runApp(const EduSenseRecorderApp());
 }
 
@@ -67,9 +65,7 @@ class EduSenseRecorderApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: RecorderHome(),
-    );
+    return const MaterialApp(home: RecorderHome());
   }
 }
 
@@ -78,7 +74,7 @@ class TranscriptHistoryScreen extends StatelessWidget {
   final Function() onClearAll;
 
   const TranscriptHistoryScreen({
-    super.key, 
+    super.key,
     required this.transcripts,
     required this.onClearAll,
   });
@@ -94,51 +90,56 @@ class TranscriptHistoryScreen extends StatelessWidget {
             onPressed: () {
               showDialog(
                 context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Clear History'),
-                  content: const Text('Are you sure you want to delete all transcripts?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
+                builder:
+                    (context) => AlertDialog(
+                      title: const Text('Clear History'),
+                      content: const Text(
+                        'Are you sure you want to delete all transcripts?',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            onClearAll();
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Delete All'),
+                        ),
+                      ],
                     ),
-                    TextButton(
-                      onPressed: () {
-                        onClearAll();
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Delete All'),
-                    ),
-                  ],
-                ),
               );
             },
           ),
         ],
       ),
-      body: transcripts.isEmpty
-          ? const Center(child: Text('No transcripts yet'))
-          : ListView.builder(
-              itemCount: transcripts.length,
-              itemBuilder: (context, index) => Dismissible(
-                key: Key(transcripts[index]),
-                background: Container(
-                  color: Colors.red,
-                  alignment: Alignment.centerRight,
-                  padding: const EdgeInsets.only(right: 16),
-                  child: const Icon(Icons.delete, color: Colors.white),
-                ),
-                direction: DismissDirection.endToStart,
-                onDismissed: (direction) {
-                  Navigator.pop(context, index);
-                },
-                child: ListTile(
-                  title: Text(transcripts[index]),
-                  subtitle: Text('Transcript ${index + 1}'),
-                ),
+      body:
+          transcripts.isEmpty
+              ? const Center(child: Text('No transcripts yet'))
+              : ListView.builder(
+                itemCount: transcripts.length,
+                itemBuilder:
+                    (context, index) => Dismissible(
+                      key: Key(transcripts[index]),
+                      background: Container(
+                        color: Colors.red,
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.only(right: 16),
+                        child: const Icon(Icons.delete, color: Colors.white),
+                      ),
+                      direction: DismissDirection.endToStart,
+                      onDismissed: (direction) {
+                        Navigator.pop(context, index);
+                      },
+                      child: ListTile(
+                        title: Text(transcripts[index]),
+                        subtitle: Text('Transcript ${index + 1}'),
+                      ),
+                    ),
               ),
-            ),
     );
   }
 }
@@ -150,12 +151,14 @@ class RecorderHome extends StatefulWidget {
   State<RecorderHome> createState() => _RecorderHomeState();
 }
 
-class _RecorderHomeState extends State<RecorderHome> with WidgetsBindingObserver {
+class _RecorderHomeState extends State<RecorderHome>
+    with WidgetsBindingObserver {
   FlutterSoundRecorder? _recorder;
   bool _isRecording = false;
   String _filePath = '';
   List<String> _transcripts = [];
-  final FlutterBackgroundService _backgroundService = FlutterBackgroundService();
+  final FlutterBackgroundService _backgroundService =
+      FlutterBackgroundService();
 
   @override
   void initState() {
@@ -201,7 +204,8 @@ class _RecorderHomeState extends State<RecorderHome> with WidgetsBindingObserver
   Future<void> _startRecording() async {
     try {
       final tempDir = await getTemporaryDirectory();
-      _filePath = '${tempDir.path}/lecture_${DateTime.now().millisecondsSinceEpoch}.aac';
+      _filePath =
+          '${tempDir.path}/lecture_${DateTime.now().millisecondsSinceEpoch}.aac';
       print('Starting recording to: $_filePath');
 
       await _recorder!.startRecorder(
@@ -223,9 +227,9 @@ class _RecorderHomeState extends State<RecorderHome> with WidgetsBindingObserver
       final recordingPath = _filePath;
       await _recorder!.stopRecorder();
       await _stopBackgroundRecording();
-      
+
       await Future.delayed(const Duration(seconds: 1));
-      
+
       final file = File(recordingPath);
       if (!await file.exists()) {
         _showSnackBar("File not created");
@@ -234,7 +238,7 @@ class _RecorderHomeState extends State<RecorderHome> with WidgetsBindingObserver
 
       final size = await file.length();
       print('Final file size: $size bytes');
-      
+
       if (size < 1024) {
         await file.delete();
         _showSnackBar("Recording failed - empty file");
@@ -251,22 +255,23 @@ class _RecorderHomeState extends State<RecorderHome> with WidgetsBindingObserver
     if (!_isRecording) return;
 
     final session = await AudioSession.instance;
-    await session.configure(AudioSessionConfiguration(
-      avAudioSessionCategory: AVAudioSessionCategory.playAndRecord,
-      avAudioSessionCategoryOptions: AVAudioSessionCategoryOptions.defaultToSpeaker,
-      avAudioSessionMode: AVAudioSessionMode.spokenAudio,
-      androidAudioAttributes: AndroidAudioAttributes(
-        contentType: AndroidAudioContentType.speech,
-        usage: AndroidAudioUsage.voiceCommunication,
+    await session.configure(
+      AudioSessionConfiguration(
+        avAudioSessionCategory: AVAudioSessionCategory.playAndRecord,
+        avAudioSessionCategoryOptions:
+            AVAudioSessionCategoryOptions.defaultToSpeaker,
+        avAudioSessionMode: AVAudioSessionMode.spokenAudio,
+        androidAudioAttributes: AndroidAudioAttributes(
+          contentType: AndroidAudioContentType.speech,
+          usage: AndroidAudioUsage.voiceCommunication,
+        ),
+        androidAudioFocusGainType: AndroidAudioFocusGainType.gain,
+        androidWillPauseWhenDucked: true,
       ),
-      androidAudioFocusGainType: AndroidAudioFocusGainType.gain,
-      androidWillPauseWhenDucked: true,
-    ));
+    );
 
     await _backgroundService.startService();
-    _backgroundService.invoke('startRecording', {
-      'filePath': _filePath,
-    });
+    _backgroundService.invoke('startRecording', {'filePath': _filePath});
   }
 
   Future<void> _stopBackgroundRecording() async {
@@ -301,7 +306,7 @@ class _RecorderHomeState extends State<RecorderHome> with WidgetsBindingObserver
       _showSnackBar("Please record audio first (min 2 seconds)");
       return;
     }
-    
+
     try {
       final result = await Navigator.push(
         context,
@@ -316,7 +321,7 @@ class _RecorderHomeState extends State<RecorderHome> with WidgetsBindingObserver
         });
         final prefs = await SharedPreferences.getInstance();
         await prefs.setStringList('transcripts', _transcripts);
-        
+
         // Clean up the audio file after successful transcription
         await _cleanupAudioFile();
       }
@@ -343,7 +348,7 @@ class _RecorderHomeState extends State<RecorderHome> with WidgetsBindingObserver
     try {
       final tempDir = await getTemporaryDirectory();
       final files = tempDir.listSync();
-      
+
       for (var file in files) {
         if (file is File && file.path.contains('lecture_')) {
           // Check if file is older than 24 hours
@@ -361,7 +366,9 @@ class _RecorderHomeState extends State<RecorderHome> with WidgetsBindingObserver
 
   void _showSnackBar(String message) {
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
     }
   }
 
@@ -390,10 +397,11 @@ class _RecorderHomeState extends State<RecorderHome> with WidgetsBindingObserver
                   final result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TranscriptHistoryScreen(
-                        transcripts: _transcripts,
-                        onClearAll: _clearTranscripts,
-                      ),
+                      builder:
+                          (context) => TranscriptHistoryScreen(
+                            transcripts: _transcripts,
+                            onClearAll: _clearTranscripts,
+                          ),
                     ),
                   );
                   if (result != null && result is int) {
@@ -408,4 +416,3 @@ class _RecorderHomeState extends State<RecorderHome> with WidgetsBindingObserver
     );
   }
 }
-
