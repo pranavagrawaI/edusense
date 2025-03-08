@@ -1,29 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-class Quiz {
-  final String question;
-  final Map<String, String> options;
-  final String correctAnswer;
-  final String explanation;
-
-  Quiz({
-    required this.question,
-    required this.options,
-    required this.correctAnswer,
-    required this.explanation,
-  });
-
-  factory Quiz.fromJson(Map<String, dynamic> json) {
-    return Quiz(
-      question: json['question'],
-      options: Map<String, String>.from(json['options']),
-      correctAnswer: json['correct_answer'],
-      explanation: json['explanation'],
-    );
-  }
-}
+import 'package:shared_preferences/shared_preferences.dart';
+import 'models/quiz.dart';
+import 'models/quiz_data.dart';
 
 class QuizScreen extends StatefulWidget {
   final int transcriptId;
@@ -43,14 +23,62 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
-    _generateQuiz();
+    _loadOrGenerateQuiz();
   }
 
-  Future<void> _generateQuiz() async {
+  Future<void> _loadOrGenerateQuiz() async {
     setState(() {
       isLoading = true;
     });
 
+    // Try to load stored quiz first
+    final storedQuiz = await _loadStoredQuiz();
+    if (storedQuiz != null) {
+      setState(() {
+        quizzes = storedQuiz;
+        isLoading = false;
+      });
+      return;
+    }
+
+    // Generate new quiz if none exists
+    await _generateQuiz();
+  }
+
+  Future<List<Quiz>?> _loadStoredQuiz() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final quizDataString = prefs.getString('quiz_${widget.transcriptId}');
+      
+      if (quizDataString != null) {
+        final quizData = QuizData.fromJson(json.decode(quizDataString));
+        return quizData.questions;
+      }
+    } catch (e) {
+      print('Error loading stored quiz: $e');
+    }
+    return null;
+  }
+
+  Future<void> _saveQuiz(List<Quiz> quizzes) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final quizData = QuizData(
+        transcriptId: widget.transcriptId,
+        questions: quizzes,
+        createdAt: DateTime.now(),
+      );
+      
+      await prefs.setString(
+        'quiz_${widget.transcriptId}',
+        json.encode(quizData.toJson()),
+      );
+    } catch (e) {
+      print('Error saving quiz: $e');
+    }
+  }
+
+  Future<void> _generateQuiz() async {
     try {
       final response = await http.post(
         Uri.parse('http://192.168.29.33:5000/generate_quiz/${widget.transcriptId}'),
@@ -60,11 +88,15 @@ class _QuizScreenState extends State<QuizScreen> {
         final data = json.decode(response.body);
         final quizData = data['quiz_data'];
 
+        final generatedQuizzes = (quizData['questions'] as List)
+            .map((q) => Quiz.fromJson(q))
+            .toList();
+
+        // Save the generated quiz
+        await _saveQuiz(generatedQuizzes);
+
         setState(() {
-          quizzes =
-              (quizData['questions'] as List)
-                  .map((q) => Quiz.fromJson(q))
-                  .toList();
+          quizzes = generatedQuizzes;
           isLoading = false;
         });
       } else {
@@ -74,9 +106,9 @@ class _QuizScreenState extends State<QuizScreen> {
       setState(() {
         isLoading = false;
       });
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error generating quiz: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error generating quiz: $e')),
+      );
     }
   }
 

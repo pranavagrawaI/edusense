@@ -298,6 +298,36 @@ def create_quiz(transcript_id):
         logging.error(f"Error in quiz generation endpoint: {str(e)}", exc_info=True)
         return jsonify({"error": str(e)}), 500
 
+@app.route('/transcript/<int:transcript_id>', methods=['DELETE'])
+def delete_transcript(transcript_id):
+    """Delete a specific transcript and its quiz."""
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            # Delete associated quiz first (foreign key constraint)
+            conn.execute('DELETE FROM quizzes WHERE transcript_id = ?', (transcript_id,))
+            # Delete the transcript
+            conn.execute('DELETE FROM transcripts WHERE id = ?', (transcript_id,))
+            conn.commit()
+        return jsonify({"message": "Transcript deleted successfully"})
+    except Exception as e:
+        logging.error(f"Error deleting transcript: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/transcripts', methods=['DELETE'])
+def delete_all_transcripts():
+    """Delete all transcripts and quizzes."""
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            # Delete all quizzes first (foreign key constraint)
+            conn.execute('DELETE FROM quizzes')
+            # Delete all transcripts
+            conn.execute('DELETE FROM transcripts')
+            conn.commit()
+        return jsonify({"message": "All transcripts deleted successfully"})
+    except Exception as e:
+        logging.error(f"Error deleting all transcripts: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     if not os.access(UPLOAD_FOLDER, os.W_OK):
         print(f"ERROR: No write permissions in {UPLOAD_FOLDER}")
