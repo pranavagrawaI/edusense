@@ -1,0 +1,333 @@
+2025-03-08 15:41:57,309 - werkzeug - WARNING -  * Debugger is active!
+2025-03-08 15:41:57,321 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-08 15:42:19,034 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-08 15:42:19,051 - root - INFO - API response content type: <class 'str'>
+2025-03-08 15:42:19,051 - root - INFO - API response content: {
+  "questions": [
+    {
+      "question": "What type of radiation do the discussed lasers produce?",
+      "options": {
+        "A": "Higher frequency microids",
+        "B": "Visible mice",
+        "C": "Electromagnetic waves",
+        "D": "Infrared radiation"
+      },
+      "correct_answer": "A",
+      "explanation": "The lecture specifically mentions that the lasers produce higher frequency microids instead of visible mice."
+    },
+    {
+      "question": "What is the primary purpose of the waveguides mentioned in the lecture?",
+      "options": {
+        "A": "To transport high power milling waves",
+        "B": "To vaporize water",
+        "C": "To collect vaporized rock",
+        "D": "To generate electricity"
+      },
+      "correct_answer": "A",
+      "explanation": "The waveguides are described as hollow metal pipes that transport high power milling waves to the rock face for vaporization."
+    },
+    {
+      "question": "What is the expected drilling speed for creating an 8-inch hole?",
+      "options": {
+        "A": "1 meter per hour",
+        "B": "2 meters per hour",
+        "C": "3 meters per hour",
+        "D": "4 meters per hour"
+      },
+      "correct_answer": "A",
+      "explanation": "The transcript states that the goal is to make an 8-inch hole at a rate of 1 meter per hour."
+    },
+    {
+      "question": "What material is formed from the vaporized rock during the drilling process?",
+      "options": {
+        "A": "Glass fibers",
+        "B": "Metal shavings",
+        "C": "Plastic compounds",
+        "D": "Water vapor"
+      },
+      "correct_answer": "A",
+      "explanation": "The lecture mentions that the test room was covered in strands that looked like glass fiber, formed by the vaporized rock."
+    },
+    {
+      "question": "How does the drilling technology compare to conventional methods?",
+      "options": {
+        "A": "It is slower and more expensive",
+        "B": "It is faster and less expensive",
+        "C": "It uses more energy",
+        "D": "It requires less precision"
+      },
+      "correct_answer": "B",
+      "explanation": "The lecturer emphasizes that the new crew technology allows for much faster drilling compared to conventional methods, which are described as slow and expensive."
+    }
+  ]
+}
+2025-03-08 15:42:19,069 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 15:42:19] "POST /generate_quiz/10 HTTP/1.1" 200 -
+2025-03-08 15:46:22,946 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-08 15:46:22,962 - root - INFO - API response content type: <class 'str'>
+2025-03-08 15:46:22,962 - root - INFO - API response content: {
+  "questions": [
+    {
+      "question": "What type of radiation do the discussed lasers produce?",
+      "options": {
+        "A": "Higher frequency microids",
+        "B": "Visible mice",
+        "C": "Electromagnetic waves",
+        "D": "Infrared radiation"
+      },
+      "correct_answer": "A",
+      "explanation": "The lecture specifically mentions that the lasers produce higher frequency microids instead of visible mice."
+    },
+    {
+      "question": "What is the primary purpose of the waveguides mentioned in the lecture?",
+      "options": {
+        "A": "To transport high power milling waves",
+        "B": "To vaporize water",
+        "C": "To collect vaporized rock",
+        "D": "To generate electricity"
+      },
+      "correct_answer": "A",
+      "explanation": "The waveguides are described as hollow metal pipes that transport high power milling waves to the rock face for drilling purposes."
+    },
+    {
+      "question": "What material is created when the solid rock is vaporized?",
+      "options": {
+        "A": "Water vapor",
+        "B": "Inert gas",
+        "C": "Vaporized rock",
+        "D": "Solid residue"
+      },
+      "correct_answer": "C",
+      "explanation": "The lecture states that the solid rock has been converted into vaporized rock, which is then blown away."
+    },
+    {
+      "question": "How long does it take to create a 4-inch hole based on the discussed drilling technology?",
+      "options": {
+        "A": "1 meter per hour",
+        "B": "1 hour",
+        "C": "1 day",
+        "D": "10 hours"
+      },
+      "correct_answer": "A",
+      "explanation": "The speaker mentions that it takes about 1 meter per hour to make a 4-inch hole using the new technology."
+    },
+    {
+      "question": "What is the expected advancement in hole size when moving from a 4-inch to an 8-inch hole?",
+      "options": {
+        "A": "No change in power requirements",
+        "B": "Doubling power for increased area",
+        "C": "Halving the time taken",
+        "D": "Making the hole 10 times wider"
+      },
+      "correct_answer": "B",
+      "explanation": "The lecture indicates that when increasing the hole size, they expect to double the power requirements, which correlates with the area being drilled."
+    }
+  ]
+}
+2025-03-08 15:46:22,974 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 15:46:22] "POST /generate_quiz/10 HTTP/1.1" 200 -
+2025-03-08 15:52:54,021 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-08 15:52:54,021 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-08 15:52:54,023 - werkzeug - INFO -  * Restarting with stat
+2025-03-08 15:52:58,860 - werkzeug - WARNING -  * Debugger is active!
+2025-03-08 15:52:58,860 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-08 16:02:16,068 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 16:02:16] "POST /transcribe HTTP/1.1" 200 -
+2025-03-08 16:03:49,220 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-08 16:03:49,229 - root - INFO - API response content type: <class 'str'>
+2025-03-08 16:03:49,229 - root - INFO - API response content: {
+  "questions": [
+    {
+      "question": "What is the primary purpose of the video discussed in the transcript?",
+      "options": {
+        "A": "To provide a comprehensive introduction to personal and remalice like tragedy.",
+        "B": "To explain how to build a website.",
+        "C": "To review different programming languages.",
+        "D": "To discuss the history of the internet."
+      },
+      "correct_answer": "A",
+      "explanation": "The video aims to provide a general audience introduction to personal and remalice like tragedy, focusing on mental models and the workings of the tool discussed."
+    },
+    {
+      "question": "What is the first stage mentioned in the pre-training process?",
+      "options": {
+        "A": "Data filtering.",
+        "B": "Balancing and processing the internet.",
+        "C": "Text extraction.",
+        "D": "Language filtering."
+      },
+      "correct_answer": "B",
+      "explanation": "The first stage in the pre-training process is balancing and processing the internet, which involves curating a dataset like Pine Web."
+    },
+    {
+      "question": "What organization is responsible for indexing web pages since 2007?",
+      "options": {
+        "A": "OpenAI.",
+        "B": "Google.",
+        "C": "Common Crawl.",
+        "D": "Frappet."
+      },
+      "correct_answer": "C",
+      "explanation": "Common Crawl has been indexing web pages since 2007, serving as a primary source of data for many projects."
+    },
+    {
+      "question": "What does URL filtering aim to eliminate from the dataset?",
+      "options": {
+        "A": "High-quality documents.",
+        "B": "Spam websites and malware.",
+        "C": "English language content.",
+        "D": "Social media links."
+      },
+      "correct_answer": "B",
+      "explanation": "URL filtering aims to remove undesirable content such as spam websites, malware sites, and other harmful URLs from the dataset."
+    },
+    {
+      "question": "What language filtering criterion is mentioned in the transcript?",
+      "options": {
+        "A": "Web pages must be in Spanish.",
+        "B": "Web pages must contain at least 65% English.",
+        "C": "All languages are accepted.",
+        "D": "Web pages must be in French."
+      },
+      "correct_answer": "B",
+      "explanation": "The language filtering criterion mentioned is that a web page must contain more than 65% English to be included in the dataset."
+    }
+  ]
+}
+2025-03-08 16:03:49,242 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 16:03:49] "POST /generate_quiz/11 HTTP/1.1" 200 -
+2025-03-08 17:24:45,655 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-08 17:24:45,655 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-08 17:24:45,655 - werkzeug - INFO -  * Restarting with stat
+2025-03-08 17:24:47,658 - werkzeug - WARNING -  * Debugger is active!
+2025-03-08 17:24:47,674 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-08 17:24:52,097 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:24:52] "POST /transcribe HTTP/1.1" 200 -
+2025-03-08 17:34:17,586 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:34:17] "POST /transcribe HTTP/1.1" 200 -
+2025-03-08 17:34:32,948 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-08 17:34:32,948 - root - INFO - API response content type: <class 'str'>
+2025-03-08 17:34:32,948 - root - INFO - API response content: {
+  "questions": [
+    {
+      "question": "What is the primary focus of the lecture?",
+      "options": {
+        "A": "Introduction to a topic",
+        "B": "Detailed analysis of a subject",
+        "C": "Summarization of findings",
+        "D": "Conclusion of a discussion"
+      },
+      "correct_answer": "A",
+      "explanation": "The lecture begins with a greeting, indicating it is likely an introductory segment."
+    },
+    {
+      "question": "What is the tone of the opening of the lecture?",
+      "options": {
+        "A": "Formal",
+        "B": "Casual",
+        "C": "Urgent",
+        "D": "Skeptical"
+      },
+      "correct_answer": "B",
+      "explanation": "The use of 'Hello. Hello.' suggests a casual and friendly tone."
+    },
+    {
+      "question": "Which of the following could be inferred about the audience from the greeting?",
+      "options": {
+        "A": "They are familiar with the speaker.",
+        "B": "They are experts in the field.",
+        "C": "They are new to the subject.",
+        "D": "They are uninterested."
+      },
+      "correct_answer": "A",
+      "explanation": "The repeated greeting implies a level of familiarity between the speaker and the audience."
+    },
+    {
+      "question": "What might be the next logical step after this greeting in a lecture?",
+      "options": {
+        "A": "An introduction of the lecture topic.",
+        "B": "A summary of previous lectures.",
+        "C": "A question and answer session.",
+        "D": "A break for refreshments."
+      },
+      "correct_answer": "A",
+      "explanation": "Typically, after an introduction, speakers will provide context or introduce the topic of discussion."
+    },
+    {
+      "question": "What is the significance of repeating 'Hello'?",
+      "options": {
+        "A": "To emphasize the importance of the topic.",
+        "B": "To engage the audience.",
+        "C": "To fill time until the presentation starts.",
+        "D": "To signal the end of the lecture."
+      },
+      "correct_answer": "B",
+      "explanation": "Repeating a greeting can serve to engage the audience and create a welcoming atmosphere."
+    }
+  ]
+}
+2025-03-08 17:34:32,969 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:34:32] "POST /generate_quiz/13 HTTP/1.1" 200 -
+2025-03-08 17:38:29,131 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:38:29] "POST /transcribe HTTP/1.1" 200 -
+2025-03-08 17:52:59,466 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:52:59] "GET /transcripts HTTP/1.1" 200 -
+2025-03-08 17:53:26,684 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-08 17:53:26,684 - root - INFO - API response content type: <class 'str'>
+2025-03-08 17:53:26,684 - root - INFO - API response content: {
+  "questions": [
+    {
+      "question": "What is the primary focus of the video discussed in the transcript?",
+      "options": {
+        "A": "To provide a general introduction to personal and remalice like tragedy",
+        "B": "To explain advanced programming techniques",
+        "C": "To analyze the history of the internet",
+        "D": "To explore the latest trends in social media"
+      },
+      "correct_answer": "A",
+      "explanation": "The video aims to provide a comprehensive but accessible introduction to personal and remalice like tragedy, addressing various mental models and implications of these tools."
+    },
+    {
+      "question": "What is the first stage mentioned in the pre-training process?",
+      "options": {
+        "A": "Data extraction",
+        "B": "Balancing and processing the internet",
+        "C": "URL filtering",
+        "D": "Language filtering"
+      },
+      "correct_answer": "B",
+      "explanation": "The first stage of the pre-training process is to balance and process the internet, which involves gathering a large quantity of high-quality documents from diverse sources."
+    },
+    {
+      "question": "What dataset is highlighted as a key source of data for many models?",
+      "options": {
+        "A": "Pine Web",
+        "B": "Common Crawl",
+        "C": "OpenAI Dataset",
+        "D": "Google Dataset"
+      },
+      "correct_answer": "B",
+      "explanation": "Common Crawl is emphasized as a significant source of raw data, having been indexing the internet since 2007 and providing foundational content for various efforts."
+    },
+    {
+      "question": "What type of content is excluded during the URL filtering process?",
+      "options": {
+        "A": "Educational websites",
+        "B": "Government websites",
+        "C": "Spam and malware websites",
+        "D": "News sites"
+      },
+      "correct_answer": "C",
+      "explanation": "URL filtering is designed to eliminate undesirable content, such as spam, malware, and other harmful websites, ensuring the quality of the dataset."
+    },
+    {
+      "question": "Why is language filtering important in the data processing stages?",
+      "options": {
+        "A": "To ensure diversity in languages represented",
+        "B": "To prioritize English-language content",
+        "C": "To eliminate non-English content completely",
+        "D": "To increase the speed of data processing"
+      },
+      "correct_answer": "B",
+      "explanation": "Language filtering is important because it helps maintain the model's effectiveness in specific languages, such as English, by ensuring that the dataset contains a significant portion of relevant language data."
+    }
+  ]
+}
+2025-03-08 17:53:26,706 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:53:26] "POST /generate_quiz/11 HTTP/1.1" 200 -

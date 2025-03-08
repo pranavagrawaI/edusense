@@ -5,27 +5,66 @@ from flask_limiter import Limiter
 from werkzeug.utils import secure_filename
 import subprocess
 from typing import Tuple, Dict
-import wave
 import sqlite3
 import logging
+from openai import OpenAI
+from datetime import datetime
+from dotenv import load_dotenv  # Add this import
+import json
 
+# Load environment variables
+load_dotenv()
+
+# Constants from environment variables
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+FLASK_SECRET_KEY = os.getenv('FLASK_SECRET_KEY')
+SERVER_HOST = os.getenv('SERVER_HOST', '0.0.0.0')
+SERVER_PORT = int(os.getenv('SERVER_PORT', '5000'))
+MAX_FILE_SIZE = int(os.getenv('MAX_FILE_SIZE', '16777216'))
+UPLOAD_FOLDER = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), 
+    os.getenv('UPLOAD_FOLDER', 'uploads')
+)
+DB_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), 
+    os.getenv('DB_PATH', 'transcripts.db')
+)
+FFMPEG_PATH = os.getenv('FFMPEG_PATH', 'ffmpeg')
+RATE_LIMIT_TRANSCRIBE = os.getenv('RATE_LIMIT_TRANSCRIBE', '10/minute')
+RATE_LIMIT_QUIZ = os.getenv('RATE_LIMIT_QUIZ', '5/minute')
+
+# Validate required environment variables
+required_vars = ['OPENAI_API_KEY', 'FLASK_SECRET_KEY']
+missing_vars = [var for var in required_vars if not os.getenv(var)]
+if missing_vars:
+    raise ValueError(f"Missing required environment variables: {', '.join(missing_vars)}")
+
+# Configure Flask app
 app = Flask(__name__)
+app.secret_key = FLASK_SECRET_KEY
 limiter = Limiter(app)
 
 # Constants
-UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
 ALLOWED_EXTENSIONS = {'wav', 'mp3', 'ogg', 'flac', 'aac'}
-MAX_FILE_SIZE = 16 * 1024 * 1024  # 16MB
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transcripts.db")
 FFMPEG_PATH = 'ffmpeg'  # Or set a specific path if needed
 
 # Initialize once at startup
 model = whisper.load_model("tiny")
 
+# Initialize OpenAI client (after loading environment variables)
+client = OpenAI(api_key=OPENAI_API_KEY)
+
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Configure logging
-logging.basicConfig(level=logging.ERROR)  # Or a different level if you prefer
+# Configure logging to file
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("asr_server.log"),
+        logging.StreamHandler()  # Also log to console
+    ]
+)
 
 def init_db():
     with sqlite3.connect(DB_PATH) as conn:
@@ -35,7 +74,17 @@ def init_db():
                       timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                       filename TEXT)''')
 
+def init_quiz_db():
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.execute('''CREATE TABLE IF NOT EXISTS quizzes
+                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      transcript_id INTEGER,
+                      quiz_data TEXT NOT NULL,
+                      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                      FOREIGN KEY (transcript_id) REFERENCES transcripts(id))''')
+
 init_db()
+init_quiz_db()
 
 def allowed_file(filename: str) -> bool:
     """Check if file extension is allowed."""
@@ -57,7 +106,7 @@ def validate_upload_file(file) -> Tuple[Dict, int] | None:
     return None
 
 @app.route('/transcribe', methods=['POST'])
-@limiter.limit("10/minute")
+@limiter.limit(RATE_LIMIT_TRANSCRIBE)
 def transcribe():
     """Handle audio file upload and transcription."""
     if 'file' not in request.files:
@@ -112,42 +161,171 @@ def transcribe():
         transcription = result.get("text", "").strip()
 
         # Store in database *before* cleanup
+        transcript_id = None
         if transcription:
             with sqlite3.connect(DB_PATH) as conn:
-                conn.execute("INSERT INTO transcripts (text, filename) VALUES (?, ?)",
+                cursor = conn.execute("INSERT INTO transcripts (text, filename) VALUES (?, ?)",
                            (transcription, filename))
-        return jsonify({"transcription": transcription})
+                transcript_id = cursor.lastrowid
+                conn.commit()
+        
+        return jsonify({
+            "transcription": transcription,
+            "transcript_id": transcript_id
+        })
 
     except Exception as e:
         app.logger.error(f"Processing failed: {str(e)}")
-        #  Rollback database transaction if necessary (using a connection pool)
         return jsonify({"error": f"Processing error: {str(e)}"}), 500
 
     finally:
         # Clean up files
         for path in [file_path, converted_path]:
             try:
-                if os.path.exists(path): # Redundant check removed
+                if os.path.exists(path): 
                     os.remove(path)
             except OSError as e:
                 app.logger.warning(f"Failed to clean up {path}: {str(e)}")
 
 @app.route('/transcripts', methods=['GET'])
 def get_transcripts():
+    """Fetch all transcripts with their IDs."""
     try:
         with sqlite3.connect(DB_PATH) as conn:
-            cur = conn.cursor()
-            cur.execute("SELECT id, text, timestamp, filename FROM transcripts ORDER BY timestamp DESC")
-            rows = cur.fetchall()
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT t.id, t.text, t.timestamp, 
+                       CASE WHEN q.id IS NOT NULL THEN 1 ELSE 0 END as has_quiz
+                FROM transcripts t
+                LEFT JOIN quizzes q ON t.id = q.transcript_id
+                ORDER BY t.timestamp DESC
+            """)
+            rows = cursor.fetchall()
             
-        return jsonify([{
-            "id": row[0],
-            "text": row[1],
-            "timestamp": row[2],
-            "filename": row[3]
-        } for row in rows])
-        
+            return jsonify([{
+                "id": row[0],
+                "text": row[1],
+                "timestamp": row[2],
+                "has_quiz": bool(row[3])
+            } for row in rows])
     except Exception as e:
+        logging.error(f"Error fetching transcripts: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+def generate_quiz(transcript_text: str, num_questions: int = 5) -> dict:
+    """Generate quiz questions from transcript using OpenAI."""
+    try:
+        prompt = f"""
+        Based on the following lecture transcript, generate {num_questions} quiz questions.
+        For each question, provide:
+        1. The question
+        2. Four multiple choice options (A, B, C, D)
+        3. The correct answer
+        4. A brief explanation of why it's correct
+
+        Transcript:
+        {transcript_text}
+        """
+
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",  
+            response_format={"type": "json_object"},  
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a helpful educational assistant that creates quiz questions based on lecture content. Always return response in the following JSON format: {'questions': [{'question': '...', 'options': {'A': '...', 'B': '...', 'C': '...', 'D': '...'}, 'correct_answer': 'A/B/C/D', 'explanation': '...'}]}"
+                },
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            seed=42  # Optional: Add for more deterministic outputs
+        )
+
+        # Get the content as a string (it should already be valid JSON)
+        content = response.choices[0].message.content
+        
+        # Log the response for debugging
+        logging.info(f"API response content type: {type(content)}")
+        logging.info(f"API response content: {content}")
+        
+        # For OpenAI API, content should be a string containing valid JSON
+        # Parse it into a Python dictionary
+        try:
+            return json.loads(content)
+        except (json.JSONDecodeError, TypeError) as e:
+            # If JSON parsing fails, return the content directly if it's already a dict
+            if isinstance(content, dict):
+                return content
+            # Otherwise, raise the error
+            logging.error(f"Failed to parse JSON: {e}")
+            raise ValueError(f"Invalid JSON response from API: {e}")
+
+    except Exception as e:
+        logging.error(f"Error generating quiz: {str(e)}")
+        raise
+
+@app.route('/generate_quiz/<int:transcript_id>', methods=['POST'])
+@limiter.limit(RATE_LIMIT_QUIZ)
+def create_quiz(transcript_id):
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            # Get transcript text
+            cursor = conn.cursor()
+            cursor.execute('SELECT text FROM transcripts WHERE id = ?', (transcript_id,))
+            result = cursor.fetchone()
+            
+            if not result:
+                return jsonify({"error": "Transcript not found"}), 404
+                
+            transcript_text = result[0]
+            
+            # Generate quiz
+            quiz_data = generate_quiz(transcript_text)
+            
+            # Store quiz in database
+            cursor.execute(
+                'INSERT INTO quizzes (transcript_id, quiz_data) VALUES (?, ?)',
+                (transcript_id, json.dumps(quiz_data))
+            )
+            conn.commit()
+            
+            return jsonify({
+                "message": "Quiz generated successfully",
+                "quiz_data": quiz_data
+            })
+            
+    except Exception as e:
+        logging.error(f"Error in quiz generation endpoint: {str(e)}", exc_info=True)
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/transcript/<int:transcript_id>', methods=['DELETE'])
+def delete_transcript(transcript_id):
+    """Delete a specific transcript and its quiz."""
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            # Delete associated quiz first (foreign key constraint)
+            conn.execute('DELETE FROM quizzes WHERE transcript_id = ?', (transcript_id,))
+            # Delete the transcript
+            conn.execute('DELETE FROM transcripts WHERE id = ?', (transcript_id,))
+            conn.commit()
+        return jsonify({"message": "Transcript deleted successfully"})
+    except Exception as e:
+        logging.error(f"Error deleting transcript: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/transcripts', methods=['DELETE'])
+def delete_all_transcripts():
+    """Delete all transcripts and quizzes."""
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            # Delete all quizzes first (foreign key constraint)
+            conn.execute('DELETE FROM quizzes')
+            # Delete all transcripts
+            conn.execute('DELETE FROM transcripts')
+            conn.commit()
+        return jsonify({"message": "All transcripts deleted successfully"})
+    except Exception as e:
+        logging.error(f"Error deleting all transcripts: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
@@ -155,4 +333,9 @@ if __name__ == '__main__':
         print(f"ERROR: No write permissions in {UPLOAD_FOLDER}")
         exit(1)
     
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    debug_mode = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
+    app.run(
+        host=SERVER_HOST, 
+        port=SERVER_PORT, 
+        debug=debug_mode
+    )

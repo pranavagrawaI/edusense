@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'dart:io';
+
+import '../../services/api/transcript_api.dart';
+import 'quiz_screen.dart';
 
 class TranscriptionScreen extends StatefulWidget {
   final String audioPath;
@@ -14,6 +15,7 @@ class TranscriptionScreen extends StatefulWidget {
 class _TranscriptionScreenState extends State<TranscriptionScreen> {
   String _transcription = "Transcribing...";
   bool _isLoading = true;
+  int? _transcriptId;
 
   @override
   void initState() {
@@ -22,36 +24,20 @@ class _TranscriptionScreenState extends State<TranscriptionScreen> {
   }
 
   Future<void> _sendAudioForTranscription() async {
-    final file = File(widget.audioPath);
-    if (!await file.exists()) {
-      _updateState("Error: Recording file not found");
-      return;
-    }
-
     try {
-      var request = http.MultipartRequest(
-        'POST',
-        Uri.parse('http://192.168.29.33:5000/transcribe'), // Update your server IP
-      )
-        ..files.add(await http.MultipartFile.fromPath(
-          'file',
-          widget.audioPath,
-          filename: 'recording.aac',
-        ));
-
-      print('Sending audio file: ${widget.audioPath}');
-      print('File size: ${(await file.length()) / 1024} KB');
-
-      var response = await request.send();
-      if (response.statusCode == 200) {
-        var responseData = await response.stream.bytesToString();
-        var jsonData = json.decode(responseData);
-        _updateState(jsonData["transcription"] ?? "No transcription found");
+      final response = await TranscriptApi.transcribeAudio(widget.audioPath);
+      
+      if (response.success && response.data != null) {
+        setState(() {
+          _transcription = response.data!["transcription"] ?? "No transcription found";
+          _transcriptId = response.data!["transcript_id"];
+          _isLoading = false;
+        });
       } else {
-        _updateState("Server error: ${response.statusCode}");
+        _updateState(response.error ?? "Error transcribing audio");
       }
     } catch (e) {
-      _updateState("Connection error: ${e.toString()}");
+      _updateState("Error: ${e.toString()}");
     }
   }
 
@@ -100,10 +86,25 @@ class _TranscriptionScreenState extends State<TranscriptionScreen> {
                   ),
                 ],
               ),
+            if (!_isLoading && _transcriptId != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => QuizScreen(transcriptId: _transcriptId!),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.quiz),
+                  label: const Text('Generate Quiz'),
+                ),
+              ),
           ],
         ),
       ),
     );
   }
-}
-
+} 
