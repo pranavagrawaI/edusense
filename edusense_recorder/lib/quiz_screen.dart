@@ -58,7 +58,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        final quizData = json.decode(data['quiz_data']);
+        final quizData = data['quiz_data'];
 
         setState(() {
           quizzes =

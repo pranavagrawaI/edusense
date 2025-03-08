@@ -56,8 +56,15 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Configure logging
-logging.basicConfig(level=logging.ERROR)  # Or a different level if you prefer
+# Configure logging to file
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("asr_server.log"),
+        logging.StreamHandler()  # Also log to console
+    ]
+)
 
 def init_db():
     with sqlite3.connect(DB_PATH) as conn:
@@ -234,9 +241,24 @@ def generate_quiz(transcript_text: str, num_questions: int = 5) -> dict:
             seed=42  # Optional: Add for more deterministic outputs
         )
 
-        # The response is already a JSON object due to response_format
-        quiz_data = response.choices[0].message.content
-        return json.loads(quiz_data)
+        # Get the content as a string (it should already be valid JSON)
+        content = response.choices[0].message.content
+        
+        # Log the response for debugging
+        logging.info(f"API response content type: {type(content)}")
+        logging.info(f"API response content: {content}")
+        
+        # For OpenAI API, content should be a string containing valid JSON
+        # Parse it into a Python dictionary
+        try:
+            return json.loads(content)
+        except (json.JSONDecodeError, TypeError) as e:
+            # If JSON parsing fails, return the content directly if it's already a dict
+            if isinstance(content, dict):
+                return content
+            # Otherwise, raise the error
+            logging.error(f"Failed to parse JSON: {e}")
+            raise ValueError(f"Invalid JSON response from API: {e}")
 
     except Exception as e:
         logging.error(f"Error generating quiz: {str(e)}")
@@ -273,7 +295,7 @@ def create_quiz(transcript_id):
             })
             
     except Exception as e:
-        logging.error(f"Error in quiz generation endpoint: {str(e)}")
+        logging.error(f"Error in quiz generation endpoint: {str(e)}", exc_info=True)
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
