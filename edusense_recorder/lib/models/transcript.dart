@@ -19,4 +19,28 @@ class Transcript {
       hasQuiz: json['has_quiz'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'text': text,
+      'timestamp': timestamp.toIso8601String(),
+      'has_quiz': hasQuiz,
+    };
+  }
+
+  // Create a copy with modified values
+  Transcript copyWith({
+    int? id,
+    String? text,
+    DateTime? timestamp,
+    bool? hasQuiz,
+  }) {
+    return Transcript(
+      id: id ?? this.id,
+      text: text ?? this.text,
+      timestamp: timestamp ?? this.timestamp,
+      hasQuiz: hasQuiz ?? this.hasQuiz,
+    );
+  }
 } 

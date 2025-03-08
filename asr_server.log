@@ -195,3 +195,139 @@
   ]
 }
 2025-03-08 16:03:49,242 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 16:03:49] "POST /generate_quiz/11 HTTP/1.1" 200 -
+2025-03-08 17:24:45,655 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-08 17:24:45,655 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-08 17:24:45,655 - werkzeug - INFO -  * Restarting with stat
+2025-03-08 17:24:47,658 - werkzeug - WARNING -  * Debugger is active!
+2025-03-08 17:24:47,674 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-08 17:24:52,097 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:24:52] "POST /transcribe HTTP/1.1" 200 -
+2025-03-08 17:34:17,586 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:34:17] "POST /transcribe HTTP/1.1" 200 -
+2025-03-08 17:34:32,948 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-08 17:34:32,948 - root - INFO - API response content type: <class 'str'>
+2025-03-08 17:34:32,948 - root - INFO - API response content: {
+  "questions": [
+    {
+      "question": "What is the primary focus of the lecture?",
+      "options": {
+        "A": "Introduction to a topic",
+        "B": "Detailed analysis of a subject",
+        "C": "Summarization of findings",
+        "D": "Conclusion of a discussion"
+      },
+      "correct_answer": "A",
+      "explanation": "The lecture begins with a greeting, indicating it is likely an introductory segment."
+    },
+    {
+      "question": "What is the tone of the opening of the lecture?",
+      "options": {
+        "A": "Formal",
+        "B": "Casual",
+        "C": "Urgent",
+        "D": "Skeptical"
+      },
+      "correct_answer": "B",
+      "explanation": "The use of 'Hello. Hello.' suggests a casual and friendly tone."
+    },
+    {
+      "question": "Which of the following could be inferred about the audience from the greeting?",
+      "options": {
+        "A": "They are familiar with the speaker.",
+        "B": "They are experts in the field.",
+        "C": "They are new to the subject.",
+        "D": "They are uninterested."
+      },
+      "correct_answer": "A",
+      "explanation": "The repeated greeting implies a level of familiarity between the speaker and the audience."
+    },
+    {
+      "question": "What might be the next logical step after this greeting in a lecture?",
+      "options": {
+        "A": "An introduction of the lecture topic.",
+        "B": "A summary of previous lectures.",
+        "C": "A question and answer session.",
+        "D": "A break for refreshments."
+      },
+      "correct_answer": "A",
+      "explanation": "Typically, after an introduction, speakers will provide context or introduce the topic of discussion."
+    },
+    {
+      "question": "What is the significance of repeating 'Hello'?",
+      "options": {
+        "A": "To emphasize the importance of the topic.",
+        "B": "To engage the audience.",
+        "C": "To fill time until the presentation starts.",
+        "D": "To signal the end of the lecture."
+      },
+      "correct_answer": "B",
+      "explanation": "Repeating a greeting can serve to engage the audience and create a welcoming atmosphere."
+    }
+  ]
+}
+2025-03-08 17:34:32,969 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:34:32] "POST /generate_quiz/13 HTTP/1.1" 200 -
+2025-03-08 17:38:29,131 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:38:29] "POST /transcribe HTTP/1.1" 200 -
+2025-03-08 17:52:59,466 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:52:59] "GET /transcripts HTTP/1.1" 200 -
+2025-03-08 17:53:26,684 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-08 17:53:26,684 - root - INFO - API response content type: <class 'str'>
+2025-03-08 17:53:26,684 - root - INFO - API response content: {
+  "questions": [
+    {
+      "question": "What is the primary focus of the video discussed in the transcript?",
+      "options": {
+        "A": "To provide a general introduction to personal and remalice like tragedy",
+        "B": "To explain advanced programming techniques",
+        "C": "To analyze the history of the internet",
+        "D": "To explore the latest trends in social media"
+      },
+      "correct_answer": "A",
+      "explanation": "The video aims to provide a comprehensive but accessible introduction to personal and remalice like tragedy, addressing various mental models and implications of these tools."
+    },
+    {
+      "question": "What is the first stage mentioned in the pre-training process?",
+      "options": {
+        "A": "Data extraction",
+        "B": "Balancing and processing the internet",
+        "C": "URL filtering",
+        "D": "Language filtering"
+      },
+      "correct_answer": "B",
+      "explanation": "The first stage of the pre-training process is to balance and process the internet, which involves gathering a large quantity of high-quality documents from diverse sources."
+    },
+    {
+      "question": "What dataset is highlighted as a key source of data for many models?",
+      "options": {
+        "A": "Pine Web",
+        "B": "Common Crawl",
+        "C": "OpenAI Dataset",
+        "D": "Google Dataset"
+      },
+      "correct_answer": "B",
+      "explanation": "Common Crawl is emphasized as a significant source of raw data, having been indexing the internet since 2007 and providing foundational content for various efforts."
+    },
+    {
+      "question": "What type of content is excluded during the URL filtering process?",
+      "options": {
+        "A": "Educational websites",
+        "B": "Government websites",
+        "C": "Spam and malware websites",
+        "D": "News sites"
+      },
+      "correct_answer": "C",
+      "explanation": "URL filtering is designed to eliminate undesirable content, such as spam, malware, and other harmful websites, ensuring the quality of the dataset."
+    },
+    {
+      "question": "Why is language filtering important in the data processing stages?",
+      "options": {
+        "A": "To ensure diversity in languages represented",
+        "B": "To prioritize English-language content",
+        "C": "To eliminate non-English content completely",
+        "D": "To increase the speed of data processing"
+      },
+      "correct_answer": "B",
+      "explanation": "Language filtering is important because it helps maintain the model's effectiveness in specific languages, such as English, by ensuring that the dataset contains a significant portion of relevant language data."
+    }
+  ]
+}
+2025-03-08 17:53:26,706 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:53:26] "POST /generate_quiz/11 HTTP/1.1" 200 -
