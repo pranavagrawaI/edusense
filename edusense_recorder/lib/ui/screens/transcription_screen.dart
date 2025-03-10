@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 import '../../services/api/transcript_api.dart';
-import 'quiz_screen.dart';
+import 'mini_lecture_screen.dart';
 
 class TranscriptionScreen extends StatefulWidget {
   final String audioPath;
@@ -94,12 +93,12 @@ class _TranscriptionScreenState extends State<TranscriptionScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => QuizScreen(transcriptId: _transcriptId!),
+                        builder: (context) => MiniLectureScreen(transcriptId: _transcriptId!),
                       ),
                     );
                   },
                   icon: const Icon(Icons.quiz),
-                  label: const Text('Generate Quiz'),
+                  label: const Text('Generate Lecture'),
                 ),
               ),
           ],

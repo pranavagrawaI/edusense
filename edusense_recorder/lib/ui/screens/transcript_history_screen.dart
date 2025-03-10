@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../models/transcript.dart';
-import '../../models/quiz.dart';
+import '../../models/mini_lecture.dart';
 import '../../services/api/transcript_api.dart';
-import '../../services/api/quiz_api.dart';
-import '../../services/storage/quiz_storage.dart';
+import '../../services/api/mini_lecture_api.dart';
+import '../../services/storage/mini_lecture_storage.dart';
 import '../widgets/transcript_card.dart';
-import 'quiz_screen.dart';
+import 'mini_lecture_screen.dart';
 
 class TranscriptHistoryScreen extends StatefulWidget {
   const TranscriptHistoryScreen({super.key});
@@ -17,8 +17,8 @@ class TranscriptHistoryScreen extends StatefulWidget {
 class _TranscriptHistoryScreenState extends State<TranscriptHistoryScreen> {
   List<Transcript> _transcripts = [];
   bool _isLoading = true;
-  Set<int> _transcriptsWithLocalQuizzes = {};
-  Map<int, bool> _generatingQuizzes = {};
+  Set<int> _transcriptsWithLocalMiniLectures = {};
+  Map<int, bool> _generatingMiniLectures = {};
 
   @override
   void initState() {
@@ -29,14 +29,13 @@ class _TranscriptHistoryScreenState extends State<TranscriptHistoryScreen> {
   Future<void> _loadData() async {
     await Future.wait([
       _loadTranscripts(),
-      _loadStoredQuizzes(),
+      _loadStoredMiniLectures(),
     ]);
   }
 
   Future<void> _loadTranscripts() async {
     try {
       final response = await TranscriptApi.getTranscripts();
-      
       setState(() {
         if (response.success && response.data != null) {
           _transcripts = response.data!;
@@ -55,26 +54,25 @@ class _TranscriptHistoryScreenState extends State<TranscriptHistoryScreen> {
     }
   }
 
-  Future<void> _loadStoredQuizzes() async {
-    final storedIds = await QuizStorage.getStoredQuizIds();
+  Future<void> _loadStoredMiniLectures() async {
+    final storedIds = await MiniLectureStorage.getStoredMiniLectureIds();
     setState(() {
-      _transcriptsWithLocalQuizzes = storedIds;
+      _transcriptsWithLocalMiniLectures = storedIds;
     });
   }
 
   Future<void> _deleteTranscript(int index) async {
     final transcriptId = _transcripts[index].id;
-    
     try {
       final response = await TranscriptApi.deleteTranscript(transcriptId);
       
       if (response.success) {
-        // Delete local quiz if exists
-        await QuizStorage.deleteQuiz(transcriptId);
+        // Delete local mini-lecture if it exists
+        await MiniLectureStorage.deleteMiniLecture(transcriptId);
         
         setState(() {
           _transcripts.removeAt(index);
-          _transcriptsWithLocalQuizzes.remove(transcriptId);
+          _transcriptsWithLocalMiniLectures.remove(transcriptId);
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -93,12 +91,12 @@ class _TranscriptHistoryScreenState extends State<TranscriptHistoryScreen> {
       final response = await TranscriptApi.deleteAllTranscripts();
       
       if (response.success) {
-        // Clear local quizzes
-        await QuizStorage.clearAllQuizzes();
+        // Clear local mini-lectures
+        await MiniLectureStorage.clearAllMiniLectures();
         
         setState(() {
           _transcripts.clear();
-          _transcriptsWithLocalQuizzes.clear();
+          _transcriptsWithLocalMiniLectures.clear();
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -112,60 +110,59 @@ class _TranscriptHistoryScreenState extends State<TranscriptHistoryScreen> {
     }
   }
 
-  Future<void> _generateQuiz(int transcriptId) async {
+  Future<void> _generateMiniLecture(int transcriptId) async {
     setState(() {
-      _generatingQuizzes[transcriptId] = true;
+      _generatingMiniLectures[transcriptId] = true;
     });
     
     try {
-      final response = await QuizApi.generateQuiz(transcriptId);
-      
+      // Call your new mini-lecture API
+      final response = await MiniLectureApi.generateMiniLecture(transcriptId);
+
       if (response.success && response.data != null) {
-        final quizData = response.data!['quiz_data'];
-        final questions = (quizData['questions'] as List);
+        // Adjust the key based on what your API returns; often something like 'mini_lecture'
+        final miniLectureJson = response.data!['mini_lecture'];
         
-        // Convert JSON data to Quiz objects
-        final quizList = questions
-            .map((q) => Quiz.fromJson(q as Map<String, dynamic>))
-            .toList();
-            
-        // Save quiz locally
-        final saved = await QuizStorage.saveQuiz(transcriptId, quizList);
+        // Parse into your MiniLecture model
+        final newMiniLecture = MiniLecture.fromJson(miniLectureJson);
+
+        // Save locally
+        final saved = await MiniLectureStorage.saveMiniLecture(transcriptId, newMiniLecture);
         
         if (saved) {
           setState(() {
-            _transcriptsWithLocalQuizzes.add(transcriptId);
+            _transcriptsWithLocalMiniLectures.add(transcriptId);
           });
           
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Quiz generated successfully!'),
+              content: Text('Mini-lecture generated successfully!'),
               backgroundColor: Colors.green,
             ),
           );
         }
       } else {
-        throw Exception(response.error ?? 'Failed to generate quiz');
+        throw Exception(response.error ?? 'Failed to generate mini-lecture');
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error generating quiz: $e'),
+          content: Text('Error generating mini-lecture: $e'),
           backgroundColor: Colors.red,
         ),
       );
     } finally {
       setState(() {
-        _generatingQuizzes.remove(transcriptId);
+        _generatingMiniLectures.remove(transcriptId);
       });
     }
   }
 
-  void _viewQuiz(int transcriptId) {
+  void _viewMiniLecture(int transcriptId) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => QuizScreen(transcriptId: transcriptId),
+        builder: (context) => MiniLectureScreen(transcriptId: transcriptId),
       ),
     );
   }
@@ -190,22 +187,22 @@ class _TranscriptHistoryScreenState extends State<TranscriptHistoryScreen> {
                   itemCount: _transcripts.length,
                   itemBuilder: (context, index) {
                     final transcript = _transcripts[index];
-                    final hasLocalQuiz = _transcriptsWithLocalQuizzes.contains(transcript.id);
-                    final isGenerating = _generatingQuizzes[transcript.id] == true;
+                    final hasLocalMiniLecture = _transcriptsWithLocalMiniLectures.contains(transcript.id);
+                    final isGenerating = _generatingMiniLectures[transcript.id] == true;
                     
                     return TranscriptCard(
                       transcript: transcript,
-                      hasLocalQuiz: hasLocalQuiz,
-                      isGeneratingQuiz: isGenerating,
+                      hasLocalMiniLecture: hasLocalMiniLecture,
+                      isGeneratingMiniLecture: isGenerating,
                       onDelete: () => _deleteTranscript(index),
-                      onViewQuiz: () => _viewQuiz(transcript.id),
-                      onGenerateQuiz: () => _generateQuiz(transcript.id),
+                      onViewMiniLecture: () => _viewMiniLecture(transcript.id),
+                      onGenerateMiniLecture: () => _generateMiniLecture(transcript.id),
                     );
                   },
                 ),
     );
   }
-  
+
   void _showClearConfirmationDialog() {
     showDialog(
       context: context,
@@ -228,4 +225,4 @@ class _TranscriptHistoryScreenState extends State<TranscriptHistoryScreen> {
       ),
     );
   }
-} 
+}

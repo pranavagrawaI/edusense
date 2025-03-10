@@ -331,3 +331,103 @@
   ]
 }
 2025-03-08 17:53:26,706 - werkzeug - INFO - 192.168.29.140 - - [08/Mar/2025 17:53:26] "POST /generate_quiz/11 HTTP/1.1" 200 -
+2025-03-10 14:08:59,940 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-10 14:08:59,940 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-10 14:08:59,959 - werkzeug - INFO -  * Restarting with stat
+2025-03-10 14:09:02,771 - werkzeug - WARNING -  * Debugger is active!
+2025-03-10 14:09:02,788 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-10 14:09:27,752 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:09:27] "GET /transcripts HTTP/1.1" 200 -
+2025-03-10 14:09:56,447 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:09:56] "DELETE /transcript/8 HTTP/1.1" 200 -
+2025-03-10 14:17:32,055 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:17:32] "GET /transcripts HTTP/1.1" 200 -
+2025-03-10 14:17:46,212 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:17:46] "DELETE /transcript/11 HTTP/1.1" 200 -
+2025-03-10 14:17:53,042 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:17:53] "DELETE /transcript/1 HTTP/1.1" 200 -
+2025-03-10 14:17:54,894 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:17:54] "DELETE /transcript/2 HTTP/1.1" 200 -
+2025-03-10 14:17:57,277 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:17:57] "DELETE /transcript/4 HTTP/1.1" 200 -
+2025-03-10 14:18:05,060 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:18:05] "DELETE /transcript/14 HTTP/1.1" 200 -
+2025-03-10 14:18:06,894 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:18:06] "DELETE /transcript/13 HTTP/1.1" 200 -
+2025-03-10 14:18:09,023 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:18:09] "DELETE /transcript/12 HTTP/1.1" 200 -
+2025-03-10 14:18:15,111 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:18:15] "[33mPOST /generate_quiz/11 HTTP/1.1[0m" 404 -
+2025-03-10 14:18:19,480 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:18:19] "GET /transcripts HTTP/1.1" 200 -
+2025-03-10 14:18:39,228 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-10 14:18:39,245 - root - INFO - API response content type: <class 'str'>
+2025-03-10 14:18:39,245 - root - INFO - API response content: {
+  "questions": [
+    {
+      "question": "What type of radiation do the discussed lasers produce?",
+      "options": {
+        "A": "Higher frequency microids",
+        "B": "Visible mice",
+        "C": "Electromagnetic waves",
+        "D": "Infrared radiation"
+      },
+      "correct_answer": "A",
+      "explanation": "The lecture specifically mentions that the lasers produce higher frequency microids instead of visible mice."
+    },
+    {
+      "question": "What is the primary purpose of the waveguides mentioned in the lecture?",
+      "options": {
+        "A": "To transport high power milling waves",
+        "B": "To vaporize water",
+        "C": "To collect vaporized rock",
+        "D": "To generate electricity"
+      },
+      "correct_answer": "A",
+      "explanation": "The waveguides are described as hollow metal pipes that transport high power milling waves to the rock face."
+    },
+    {
+      "question": "What is the expected drilling speed for creating a 4-inch hole?",
+      "options": {
+        "A": "1 meter per hour",
+        "B": "1 inch per hour",
+        "C": "1 kilometer per hour",
+        "D": "10 meters per hour"
+      },
+      "correct_answer": "A",
+      "explanation": "The lecture states that making a 4-inch hole is expected to take about 1 meter per hour."
+    },
+    {
+      "question": "What material is formed from the vaporized rock during the drilling process?",
+      "options": {
+        "A": "Glass fibers",
+        "B": "Liquid metal",
+        "C": "Inert gas",
+        "D": "Sodium"
+      },
+      "correct_answer": "A",
+      "explanation": "The transcript mentions that the test room was covered in strands that looked like glass fibers, formed from vaporized rock."
+    },
+    {
+      "question": "How does the power of the giant used for drilling compare when moving from a 4-inch to an 8-inch hole?",
+      "options": {
+        "A": "It doubles",
+        "B": "It triples",
+        "C": "It increases tenfold",
+        "D": "It remains the same"
+      },
+      "correct_answer": "C",
+      "explanation": "The lecture indicates that the power is increased ten times with the use of a 1-micron giant, even though the area is only doubled."
+    }
+  ]
+}
+2025-03-10 14:18:39,267 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:18:39] "POST /generate_quiz/10 HTTP/1.1" 200 -
+2025-03-10 14:26:19,064 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-10 14:26:19,505 - werkzeug - INFO -  * Restarting with stat
+2025-03-10 14:26:23,069 - werkzeug - WARNING -  * Debugger is active!
+2025-03-10 14:26:23,091 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-10 14:38:04,824 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 14:38:04] "GET /transcripts HTTP/1.1" 200 -
+2025-03-10 16:59:49,696 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-10 16:59:49,697 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-10 16:59:49,723 - werkzeug - INFO -  * Restarting with stat
+2025-03-10 16:59:53,448 - werkzeug - WARNING -  * Debugger is active!
+2025-03-10 16:59:53,461 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-10 16:59:57,611 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 16:59:57] "GET /transcripts HTTP/1.1" 200 -
+2025-03-10 16:59:57,620 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 16:59:57] "DELETE /transcripts HTTP/1.1" 200 -
+2025-03-10 17:00:10,264 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 17:00:10] "GET /transcripts HTTP/1.1" 200 -
+2025-03-10 17:00:18,560 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 17:00:18] "GET /transcripts HTTP/1.1" 200 -
+2025-03-10 17:02:58,050 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 17:02:58] "GET /transcripts HTTP/1.1" 200 -

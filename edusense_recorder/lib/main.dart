@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:audio_session/audio_session.dart';
+import 'dart:async';
 
 import 'ui/screens/transcription_screen.dart';
 import 'ui/screens/transcript_history_screen.dart';
@@ -90,6 +91,8 @@ class _RecorderHomeState extends State<RecorderHome>
   String _filePath = '';
   final FlutterBackgroundService _backgroundService =
       FlutterBackgroundService();
+  Timer? _timer;
+  Duration _recordingDuration = Duration.zero;
 
   @override
   void initState() {
@@ -104,6 +107,7 @@ class _RecorderHomeState extends State<RecorderHome>
     WidgetsBinding.instance.removeObserver(this);
     _recorder?.closeRecorder();
     _cleanupAudioFile();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -146,6 +150,7 @@ class _RecorderHomeState extends State<RecorderHome>
         audioSource: AudioSource.microphone,
       );
       setState(() => _isRecording = true);
+      _startTimer();
     } catch (e) {
       _showSnackBar("Recording initialization failed: ${e.toString()}");
       print('Recording start error: $e');
@@ -176,6 +181,7 @@ class _RecorderHomeState extends State<RecorderHome>
         setState(() => _isRecording = false);
         _showSnackBar("Recording saved: ${size ~/ 1024}KB");
       }
+      _stopTimer();
     } catch (e) {
       _showSnackBar("Finalization error: ${e.toString()}");
     }
@@ -268,6 +274,25 @@ class _RecorderHomeState extends State<RecorderHome>
     }
   }
 
+  void _startTimer() {
+    _recordingDuration = Duration.zero;
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _recordingDuration += Duration(seconds: 1);
+      });
+    });
+  }
+
+  void _stopTimer() {
+    _timer?.cancel();
+  }
+
+  String get _formattedDuration {
+    final minutes = _recordingDuration.inMinutes;
+    final seconds = _recordingDuration.inSeconds.remainder(60);
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
   void _showSnackBar(String message) {
     if (mounted) {
       ScaffoldMessenger.of(
@@ -284,6 +309,11 @@ class _RecorderHomeState extends State<RecorderHome>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              _isRecording ? _formattedDuration : '00:00',
+              style: TextStyle(fontSize: 24),
+            ),
+            const SizedBox(height: 20),
             IconButton(
               iconSize: 64,
               icon: Icon(_isRecording ? Icons.stop : Icons.mic),

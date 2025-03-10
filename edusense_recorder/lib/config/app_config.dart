@@ -7,9 +7,9 @@ class AppConfig {
   // API endpoints
   static const String transcribeEndpoint = '$serverUrl/transcribe';
   static const String transcriptsEndpoint = '$serverUrl/transcripts';
-  static String generateQuizEndpoint(int transcriptId) => '$serverUrl/generate_quiz/$transcriptId';
+  static String generateMiniLectureEndpoint(int transcriptId) => '$serverUrl/generate_mini_lecture/$transcriptId';
   static String deleteTranscriptEndpoint(int transcriptId) => '$serverUrl/transcript/$transcriptId';
   
   // Local storage keys
-  static String quizKey(int transcriptId) => 'quiz_$transcriptId';
+  static String miniLectureKey(int transcriptId) => 'mini_lecture_$transcriptId';
 } 
