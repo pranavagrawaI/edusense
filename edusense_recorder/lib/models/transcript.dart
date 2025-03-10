@@ -2,13 +2,13 @@ class Transcript {
   final int id;
   final String text;
   final DateTime timestamp;
-  final bool hasQuiz;
+  final bool hasMiniLecture;
 
   Transcript({
     required this.id,
     required this.text,
     required this.timestamp,
-    required this.hasQuiz,
+    required this.hasMiniLecture,
   });
 
   factory Transcript.fromJson(Map<String, dynamic> json) {
@@ -16,7 +16,7 @@ class Transcript {
       id: json['id'],
       text: json['text'],
       timestamp: DateTime.parse(json['timestamp']),
-      hasQuiz: json['has_quiz'],
+      hasMiniLecture: json['has_mini_lecture'] ?? false,
     );
   }
 
@@ -25,7 +25,7 @@ class Transcript {
       'id': id,
       'text': text,
       'timestamp': timestamp.toIso8601String(),
-      'has_quiz': hasQuiz,
+      'has_mini_lecture': hasMiniLecture,
     };
   }
 
@@ -34,13 +34,13 @@ class Transcript {
     int? id,
     String? text,
     DateTime? timestamp,
-    bool? hasQuiz,
+    bool? hasMiniLecture,
   }) {
     return Transcript(
       id: id ?? this.id,
       text: text ?? this.text,
       timestamp: timestamp ?? this.timestamp,
-      hasQuiz: hasQuiz ?? this.hasQuiz,
+      hasMiniLecture: hasMiniLecture ?? this.hasMiniLecture,
     );
   }
-} 
+}

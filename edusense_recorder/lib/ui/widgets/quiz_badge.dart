@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class QuizBadge extends StatelessWidget {
-  final bool isLocalQuiz;
+class LectureBadge extends StatelessWidget {
+  final bool isLocalLecture;
 
-  const QuizBadge({
+  const LectureBadge({
     Key? key,
-    required this.isLocalQuiz,
+    required this.isLocalLecture,
   }) : super(key: key);
 
   @override
@@ -26,14 +26,14 @@ class QuizBadge extends StatelessWidget {
           Icon(
             Icons.quiz,
             size: 16,
-            color: isLocalQuiz ? Colors.green : Colors.blue,
+            color: isLocalLecture ? Colors.green : Colors.blue,
           ),
           const SizedBox(width: 4),
           Text(
-            'Quiz Available',
+            'Lecture Available',
             style: TextStyle(
               fontSize: 12,
-              color: isLocalQuiz ? Colors.green : Colors.blue,
+              color: isLocalLecture ? Colors.green : Colors.blue,
               fontWeight: FontWeight.bold,
             ),
           ),
