@@ -4,9 +4,9 @@ class LectureBadge extends StatelessWidget {
   final bool isLocalLecture;
 
   const LectureBadge({
-    Key? key,
+    super.key,
     required this.isLocalLecture,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

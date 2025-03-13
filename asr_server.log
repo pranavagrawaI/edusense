@@ -431,3 +431,64 @@
 2025-03-10 17:00:10,264 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 17:00:10] "GET /transcripts HTTP/1.1" 200 -
 2025-03-10 17:00:18,560 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 17:00:18] "GET /transcripts HTTP/1.1" 200 -
 2025-03-10 17:02:58,050 - werkzeug - INFO - 192.168.29.140 - - [10/Mar/2025 17:02:58] "GET /transcripts HTTP/1.1" 200 -
+2025-03-11 14:45:47,931 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-11 14:45:47,931 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-11 14:45:47,951 - werkzeug - INFO -  * Restarting with stat
+2025-03-11 14:45:50,882 - werkzeug - WARNING -  * Debugger is active!
+2025-03-11 14:45:50,895 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-11 14:48:29,324 - werkzeug - INFO - 192.168.29.140 - - [11/Mar/2025 14:48:29] "GET /transcripts HTTP/1.1" 200 -
+2025-03-11 14:51:00,524 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-11 14:51:00,875 - werkzeug - INFO -  * Restarting with stat
+2025-03-11 14:51:43,395 - werkzeug - WARNING -  * Debugger is active!
+2025-03-11 14:51:43,410 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-11 15:52:22,325 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-11 15:52:23,001 - werkzeug - INFO -  * Restarting with stat
+2025-03-11 15:52:29,972 - werkzeug - WARNING -  * Debugger is active!
+2025-03-11 15:52:29,993 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-11 15:52:36,961 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-11 15:52:37,353 - werkzeug - INFO -  * Restarting with stat
+2025-03-11 15:52:41,352 - werkzeug - WARNING -  * Debugger is active!
+2025-03-11 15:52:41,361 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-13 15:01:38,261 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-13 15:01:38,261 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-13 15:01:38,293 - werkzeug - INFO -  * Restarting with stat
+2025-03-13 15:02:04,947 - werkzeug - WARNING -  * Debugger is active!
+2025-03-13 15:02:04,969 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-13 15:06:37,645 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 15:06:37] "POST /transcribe HTTP/1.1" 200 -
+2025-03-13 15:07:09,961 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-13 15:07:09,985 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 15:07:09] "POST /generate_mini_lecture/15 HTTP/1.1" 200 -
+2025-03-13 15:11:52,802 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 15:11:52] "GET /transcripts HTTP/1.1" 200 -
+2025-03-13 15:12:15,110 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 15:12:15] "GET /transcripts HTTP/1.1" 200 -
+2025-03-13 16:23:19,893 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 16:23:19] "GET /transcripts HTTP/1.1" 200 -
+2025-03-13 16:38:07,606 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 16:38:07] "POST /transcribe HTTP/1.1" 200 -
+2025-03-13 16:39:51,262 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-13 16:39:51,295 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 16:39:51] "POST /generate_mini_lecture/16 HTTP/1.1" 200 -
+2025-03-13 16:41:09,783 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 16:41:09] "GET /transcripts HTTP/1.1" 200 -
+2025-03-13 16:41:17,127 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 16:41:17] "GET /transcripts HTTP/1.1" 200 -
+2025-03-13 16:43:31,266 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 16:43:31] "GET /transcripts HTTP/1.1" 200 -
+2025-03-13 16:44:09,888 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 16:44:09] "GET /transcripts HTTP/1.1" 200 -
+2025-03-13 22:56:50,697 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-13 22:56:50,697 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-13 22:56:50,697 - werkzeug - INFO -  * Restarting with stat
+2025-03-13 22:56:54,119 - werkzeug - WARNING -  * Debugger is active!
+2025-03-13 22:56:54,134 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-13 23:02:31,395 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 23:02:31] "GET /transcripts HTTP/1.1" 200 -
+2025-03-13 23:08:44,073 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-13 23:08:44,073 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-13 23:08:44,090 - werkzeug - INFO -  * Restarting with stat
+2025-03-13 23:08:46,393 - werkzeug - WARNING -  * Debugger is active!
+2025-03-13 23:08:46,393 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-13 23:09:15,754 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 23:09:15] "GET /transcripts HTTP/1.1" 200 -
+2025-03-13 23:09:25,073 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 23:09:25] "GET /transcripts HTTP/1.1" 200 -

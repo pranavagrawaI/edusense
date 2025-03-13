@@ -14,14 +14,14 @@ class TranscriptCard extends StatelessWidget {
   final VoidCallback onGenerateMiniLecture;
 
   const TranscriptCard({
-    Key? key,
+    super.key,
     required this.transcript,
     required this.hasLocalMiniLecture,
     required this.isGeneratingMiniLecture,
     required this.onDelete,
     required this.onViewMiniLecture,
     required this.onGenerateMiniLecture,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
