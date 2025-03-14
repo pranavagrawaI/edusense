@@ -140,7 +140,7 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        ...miniLecture!.keyTopics.map((topic) => _buildTopicCard(topic)).toList(),
+        ...miniLecture!.keyTopics.map((topic) => _buildTopicCard(topic)),
       ],
     );
   }
@@ -168,7 +168,7 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
                 'Insights:',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               ),
-              ...topic.insights.map((insight) => Text('- $insight')).toList()
+              ...topic.insights.map((insight) => Text('- $insight'))
             ],
           ],  
         ),

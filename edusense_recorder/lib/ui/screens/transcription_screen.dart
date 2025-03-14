@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../services/api/transcript_api.dart';
 import 'mini_lecture_screen.dart';
+import '../../services/storage/transcript_storage.dart';
 
 class TranscriptionScreen extends StatefulWidget {
   final String audioPath;
@@ -25,13 +26,26 @@ class _TranscriptionScreenState extends State<TranscriptionScreen> {
   Future<void> _sendAudioForTranscription() async {
     try {
       final response = await TranscriptApi.transcribeAudio(widget.audioPath);
-      
+
       if (response.success && response.data != null) {
         setState(() {
-          _transcription = response.data!["transcription"] ?? "No transcription found";
+          _transcription =
+              response.data!["transcription"] ?? "No transcription found";
           _transcriptId = response.data!["transcript_id"];
           _isLoading = false;
         });
+        if (_transcriptId != null) {
+          final defaultTitle =
+              _transcription.length > 30
+                  ? _transcription.substring(0, 30)
+                  : _transcription;
+          await TranscriptStorage.saveTranscriptMetadata(
+            TranscriptMetadata(
+              transcriptId: _transcriptId!,
+              title: defaultTitle,
+            ),
+          );
+        }
       } else {
         _updateState(response.error ?? "Error transcribing audio");
       }
@@ -93,7 +107,9 @@ class _TranscriptionScreenState extends State<TranscriptionScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MiniLectureScreen(transcriptId: _transcriptId!),
+                        builder:
+                            (context) =>
+                                MiniLectureScreen(transcriptId: _transcriptId!),
                       ),
                     );
                   },
@@ -106,4 +122,4 @@ class _TranscriptionScreenState extends State<TranscriptionScreen> {
       ),
     );
   }
-} 
+}
