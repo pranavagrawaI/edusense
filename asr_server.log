@@ -492,3 +492,12 @@
 2025-03-13 23:08:46,393 - werkzeug - INFO -  * Debugger PIN: 633-125-271
 2025-03-13 23:09:15,754 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 23:09:15] "GET /transcripts HTTP/1.1" 200 -
 2025-03-13 23:09:25,073 - werkzeug - INFO - 192.168.29.140 - - [13/Mar/2025 23:09:25] "GET /transcripts HTTP/1.1" 200 -
+2025-03-14 17:06:16,380 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-14 17:06:16,380 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-14 17:06:16,380 - werkzeug - INFO -  * Restarting with stat
+2025-03-14 17:06:18,716 - werkzeug - WARNING -  * Debugger is active!
+2025-03-14 17:06:18,716 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-14 17:07:22,176 - werkzeug - INFO - 192.168.29.140 - - [14/Mar/2025 17:07:22] "GET /transcripts HTTP/1.1" 200 -

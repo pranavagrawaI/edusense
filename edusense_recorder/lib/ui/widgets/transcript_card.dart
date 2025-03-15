@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../../models/transcript.dart';
 import 'quiz_badge.dart';
 import 'quiz_generator_button.dart';
@@ -25,6 +24,9 @@ class TranscriptCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Use the helper to get the truncated text
+    final truncatedText = truncateTextByWords(transcript.text, 5);
+
     return Card(
       elevation: 4,
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -46,10 +48,9 @@ class TranscriptCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Display only the first 5 words plus "..."
                 Text(
-                  transcript.text.length > 150
-                      ? '${transcript.text.substring(0, 150)}...'
-                      : transcript.text,
+                  truncatedText,
                   style: const TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 8),
@@ -116,6 +117,7 @@ class TranscriptCard extends StatelessWidget {
     );
   }
 
+  // Helper to show a confirm dialog before deleting
   void _confirmDelete(BuildContext context) {
     showDialog(
       context: context,
@@ -163,4 +165,13 @@ class TranscriptCard extends StatelessWidget {
       ],
     );
   }
+}
+
+/// Truncate text at the specified word limit
+String truncateTextByWords(String text, int wordLimit) {
+  final words = text.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).toList();
+  if (words.length <= wordLimit) {
+    return text; // or words.join(' ')
+  }
+  return '${words.take(wordLimit).join(' ')}...';
 }
