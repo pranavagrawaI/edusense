@@ -33,44 +33,49 @@ class _TranscriptHistoryScreenState extends State<TranscriptHistoryScreen> {
   }
 
   Future<void> _loadTranscripts() async {
+    setState(() => _isLoading = true);
+
+    // 1) Immediately load local transcripts so the UI shows something
+    final localMetadata = await TranscriptStorage.loadTranscriptMetadata();
+    final localTranscripts =
+        localMetadata.map((metadata) {
+          return Transcript(
+            id: metadata.transcriptId,
+            text: metadata.title,
+            timestamp: DateTime.now(),
+            hasMiniLecture: _transcriptsWithLocalMiniLectures.contains(
+              metadata.transcriptId,
+            ),
+          );
+        }).toList();
+
+    setState(() {
+      _transcripts = localTranscripts;
+      _isLoading = false;
+    });
+
+    // 2) Then try the server in the background
     try {
       final response = await TranscriptApi.getTranscripts();
       if (response.success && response.data != null) {
+        setState(() => _isLoading = true);
+        // Show server transcripts
         setState(() {
           _transcripts = response.data!;
         });
-        for (var transcript in response.data!) {
-          final title =
-              transcript.text.length > 30
-                  ? transcript.text.substring(0, 30)
-                  : transcript.text;
-          TranscriptStorage.saveTranscriptMetadata(
-            TranscriptMetadata(transcriptId: transcript.id, title: title),
+        // Save them locally
+        for (var t in _transcripts) {
+          final defaultTitle =
+              t.text.length > 30 ? t.text.substring(0, 30) : t.text;
+          await TranscriptStorage.saveTranscriptMetadata(
+            TranscriptMetadata(transcriptId: t.id, title: defaultTitle),
           );
         }
-      } else {
-        throw Exception(response.error ?? "Unknown error");
       }
     } catch (e) {
-      // If the server call fails, load transcripts from local storage.
-      final localMetadata = await TranscriptStorage.loadTranscriptMetadata();
-      setState(() {
-        _transcripts =
-            localMetadata.map((metadata) {
-              return Transcript(
-                id: metadata.transcriptId,
-                text: metadata.title,
-                timestamp: DateTime.now(),
-                hasMiniLecture: _transcriptsWithLocalMiniLectures.contains(
-                  metadata.transcriptId,
-                ),
-              );
-            }).toList();
-      });
+      // If server fails, do nothing. We already have local data shown.
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() => _isLoading = false);
     }
   }
 
