@@ -501,3 +501,34 @@
 2025-03-14 17:06:18,716 - werkzeug - WARNING -  * Debugger is active!
 2025-03-14 17:06:18,716 - werkzeug - INFO -  * Debugger PIN: 633-125-271
 2025-03-14 17:07:22,176 - werkzeug - INFO - 192.168.29.140 - - [14/Mar/2025 17:07:22] "GET /transcripts HTTP/1.1" 200 -
+2025-03-15 17:51:11,696 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-15 17:51:11,696 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-15 17:51:11,729 - werkzeug - INFO -  * Restarting with stat
+2025-03-15 17:51:15,483 - werkzeug - WARNING -  * Debugger is active!
+2025-03-15 17:51:15,499 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-15 17:52:02,268 - asr_server - ERROR - Processing failed: Expected entry at `file` to be bytes, an io.IOBase instance, PathLike or a tuple but received <class 'str'> instead. See https://github.com/openai/openai-python/tree/main#file-uploads
+2025-03-15 17:52:02,268 - werkzeug - INFO - 192.168.29.140 - - [15/Mar/2025 17:52:02] "[35m[1mPOST /transcribe HTTP/1.1[0m" 500 -
+2025-03-15 17:54:25,843 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-15 17:54:26,174 - werkzeug - INFO -  * Restarting with stat
+2025-03-15 17:55:01,638 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-15 17:55:01,639 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-15 17:55:01,641 - werkzeug - INFO -  * Restarting with stat
+2025-03-15 17:55:04,124 - werkzeug - WARNING -  * Debugger is active!
+2025-03-15 17:55:04,124 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-15 17:55:23,275 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-15 17:55:23,275 - asr_server - ERROR - Processing failed: 'Transcription' object has no attribute 'get'
+2025-03-15 17:55:23,275 - werkzeug - INFO - 192.168.29.140 - - [15/Mar/2025 17:55:23] "[35m[1mPOST /transcribe HTTP/1.1[0m" 500 -
+2025-03-15 17:56:39,358 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-15 17:56:39,674 - werkzeug - INFO -  * Restarting with stat
+2025-03-15 17:56:43,691 - werkzeug - WARNING -  * Debugger is active!
+2025-03-15 17:56:43,708 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-15 17:56:48,892 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-15 17:56:48,908 - werkzeug - INFO - 192.168.29.140 - - [15/Mar/2025 17:56:48] "POST /transcribe HTTP/1.1" 200 -
+2025-03-15 17:57:05,341 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-15 17:57:05,640 - werkzeug - INFO -  * Restarting with stat
