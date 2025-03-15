@@ -10,12 +10,10 @@ class TranscriptMetadata {
     required this.title,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'transcriptId': transcriptId,
-      'title': title,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    'transcriptId': transcriptId,
+    'title': title,
+  };
 
   factory TranscriptMetadata.fromJson(Map<String, dynamic> json) {
     return TranscriptMetadata(
@@ -28,32 +26,43 @@ class TranscriptMetadata {
 class TranscriptStorage {
   static const String transcriptsKey = 'transcripts_metadata';
 
-  // Save a new transcript metadata entry.
+  /// Save or update a transcript metadata entry without duplicating.
   static Future<bool> saveTranscriptMetadata(TranscriptMetadata metadata) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      // Retrieve the current list; if none, start with an empty list.
       final jsonString = prefs.getString(transcriptsKey);
-      List<dynamic> metadataList = jsonString != null ? json.decode(jsonString) : [];
-      // Append the new metadata.
+
+      List<dynamic> metadataList = jsonString != null
+          ? json.decode(jsonString)
+          : [];
+
+      // Remove any existing entry with the same transcript ID
+      metadataList.removeWhere(
+        (item) => item['transcriptId'] == metadata.transcriptId,
+      );
+
+      // Add the new (or updated) entry
       metadataList.add(metadata.toJson());
-      // Save back the updated list.
+
       await prefs.setString(transcriptsKey, json.encode(metadataList));
-      return true;  
+      return true;
     } catch (e) {
       print('Error saving transcript metadata: $e');
       return false;
     }
   }
 
-  // Load all stored transcript metadata.
+  /// Load all stored transcript metadata.
   static Future<List<TranscriptMetadata>> loadTranscriptMetadata() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final jsonString = prefs.getString(transcriptsKey);
+
       if (jsonString != null) {
         List<dynamic> metadataList = json.decode(jsonString);
-        return metadataList.map((e) => TranscriptMetadata.fromJson(e)).toList();
+        return metadataList
+            .map((e) => TranscriptMetadata.fromJson(e))
+            .toList();
       }
     } catch (e) {
       print('Error loading transcript metadata: $e');
@@ -61,14 +70,16 @@ class TranscriptStorage {
     return [];
   }
 
-  // Delete metadata for a specific transcript.
+  /// Delete metadata for a specific transcript ID.
   static Future<bool> deleteTranscriptMetadata(int transcriptId) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final jsonString = prefs.getString(transcriptsKey);
       if (jsonString != null) {
         List<dynamic> metadataList = json.decode(jsonString);
-        metadataList.removeWhere((element) => element['transcriptId'] == transcriptId);
+        metadataList.removeWhere(
+          (element) => element['transcriptId'] == transcriptId,
+        );
         await prefs.setString(transcriptsKey, json.encode(metadataList));
       }
       return true;
@@ -78,7 +89,7 @@ class TranscriptStorage {
     }
   }
 
-  // Clear all transcript metadata.
+  /// Clear all transcript metadata.
   static Future<bool> clearAllTranscriptMetadata() async {
     try {
       final prefs = await SharedPreferences.getInstance();
