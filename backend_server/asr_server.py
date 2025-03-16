@@ -5,8 +5,6 @@ import logging
 import subprocess
 from datetime import datetime
 from typing import Tuple, Dict, Optional, Union
-
-import whisper
 from flask import Flask, request, jsonify
 from flask_limiter import Limiter
 from werkzeug.utils import secure_filename
@@ -52,8 +50,7 @@ logging.basicConfig(
     ]
 )
 
-# Load the Whisper model and initialize the OpenAI client
-model = whisper.load_model("tiny")
+# Load the and initialize the OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 def init_db() -> None:
@@ -161,12 +158,15 @@ def transcribe() -> Union[tuple, str]:
             return jsonify({"error": "FFmpeg executable not found"}), 500
 
         abs_converted_path = os.path.abspath(converted_path)
-        result = model.transcribe(
-            abs_converted_path,
-            language='en',
-            fp16=False
-        )
-        transcription = result.get("text", "").strip()
+        
+        with open(abs_converted_path, 'rb') as audio_file:
+            result = client.audio.transcriptions.create(
+            model="whisper-1",
+            file=audio_file,
+            response_format="json"
+            )
+
+        transcription = result.text.strip()
 
         transcript_id = None
         if transcription:
