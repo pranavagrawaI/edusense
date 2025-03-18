@@ -532,3 +532,79 @@
 2025-03-15 17:56:48,908 - werkzeug - INFO - 192.168.29.140 - - [15/Mar/2025 17:56:48] "POST /transcribe HTTP/1.1" 200 -
 2025-03-15 17:57:05,341 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
 2025-03-15 17:57:05,640 - werkzeug - INFO -  * Restarting with stat
+2025-03-16 16:56:14,852 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.29.33:5000
+2025-03-16 16:56:14,852 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-16 16:56:14,859 - werkzeug - INFO -  * Restarting with stat
+2025-03-16 16:56:16,013 - werkzeug - WARNING -  * Debugger is active!
+2025-03-16 16:56:16,029 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-16 16:56:44,324 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-16 16:56:44,347 - werkzeug - INFO - 192.168.29.140 - - [16/Mar/2025 16:56:44] "POST /transcribe HTTP/1.1" 200 -
+2025-03-16 16:57:36,393 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-16 16:57:36,411 - werkzeug - INFO - 192.168.29.140 - - [16/Mar/2025 16:57:36] "POST /transcribe HTTP/1.1" 200 -
+2025-03-16 17:04:18,967 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-16 17:04:18,996 - werkzeug - INFO - 192.168.29.140 - - [16/Mar/2025 17:04:18] "POST /transcribe HTTP/1.1" 200 -
+2025-03-16 17:26:19,226 - werkzeug - INFO - 192.168.29.140 - - [16/Mar/2025 17:26:19] "GET /transcripts HTTP/1.1" 200 -
+2025-03-16 17:27:04,191 - werkzeug - INFO - 192.168.29.140 - - [16/Mar/2025 17:27:04] "DELETE /transcript/20 HTTP/1.1" 200 -
+2025-03-16 17:27:05,620 - werkzeug - INFO - 192.168.29.140 - - [16/Mar/2025 17:27:05] "DELETE /transcript/19 HTTP/1.1" 200 -
+2025-03-16 17:27:07,162 - werkzeug - INFO - 192.168.29.140 - - [16/Mar/2025 17:27:07] "DELETE /transcript/18 HTTP/1.1" 200 -
+2025-03-16 17:27:08,702 - werkzeug - INFO - 192.168.29.140 - - [16/Mar/2025 17:27:08] "DELETE /transcript/17 HTTP/1.1" 200 -
+2025-03-18 18:37:11,115 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.150.76:5000
+2025-03-18 18:37:11,115 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-18 18:37:11,135 - werkzeug - INFO -  * Restarting with stat
+2025-03-18 18:37:12,231 - werkzeug - WARNING -  * Debugger is active!
+2025-03-18 18:37:12,247 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-18 18:48:13,321 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-18 18:48:13,385 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 18:48:13] "POST /transcribe HTTP/1.1" 200 -
+2025-03-18 18:48:40,866 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-18 18:48:40,918 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 18:48:40] "POST /generate_mini_lecture/21 HTTP/1.1" 200 -
+2025-03-18 18:49:53,583 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 18:49:53] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 18:52:59,908 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 18:52:59] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 18:53:28,936 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 18:53:28] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:09:34,289 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.150.76:5000
+2025-03-18 23:09:34,290 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-18 23:09:34,308 - werkzeug - INFO -  * Restarting with stat
+2025-03-18 23:09:35,515 - werkzeug - WARNING -  * Debugger is active!
+2025-03-18 23:09:35,526 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-18 23:09:53,155 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:09:53] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:20:38,646 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:20:38] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:25:20,280 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:25:20] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:33:27,260 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:33:27] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:34:57,516 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:34:57] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:35:18,966 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:35:18] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:35:48,841 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:35:48] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:35:58,600 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:35:58] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:41:16,590 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-18 23:41:16,628 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:41:16] "POST /transcribe HTTP/1.1" 200 -
+2025-03-18 23:41:38,203 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-18 23:41:38,238 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:41:38] "POST /generate_mini_lecture/22 HTTP/1.1" 200 -
+2025-03-18 23:42:14,956 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:42:14] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:45:21,054 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-18 23:45:21,236 - werkzeug - INFO -  * Restarting with stat
+2025-03-18 23:45:23,914 - werkzeug - WARNING -  * Debugger is active!
+2025-03-18 23:45:23,932 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-18 23:45:39,742 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:45:39] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:45:58,766 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-18 23:45:58,786 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:45:58] "POST /generate_mini_lecture/22 HTTP/1.1" 200 -
+2025-03-18 23:49:39,245 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:49:39] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:49:52,117 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:49:52] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:50:01,804 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:50:01] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:50:42,419 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:50:42] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:51:11,872 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:51:11] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:52:58,602 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-18 23:52:58,863 - werkzeug - INFO -  * Restarting with stat
+2025-03-18 23:53:00,805 - werkzeug - WARNING -  * Debugger is active!
+2025-03-18 23:53:00,819 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-18 23:53:08,593 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:53:08] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:53:11,967 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:53:11] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:53:16,278 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:53:16] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:53:20,907 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:53:20] "GET /transcripts HTTP/1.1" 200 -
+2025-03-18 23:54:27,080 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:54:27] "GET /transcripts HTTP/1.1" 200 -

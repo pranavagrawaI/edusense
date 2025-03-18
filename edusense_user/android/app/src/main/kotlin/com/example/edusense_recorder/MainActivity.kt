@@ -1,4 +1,4 @@
-package com.example.edusense_recorder
+package com.example.edusense_user
 
 import io.flutter.embedding.android.FlutterActivity
 

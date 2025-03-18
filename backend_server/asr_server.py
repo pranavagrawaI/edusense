@@ -196,9 +196,10 @@ def get_transcripts() -> str:
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT t.id, t.text, t.timestamp,
-                       CASE WHEN ml.id IS NOT NULL THEN 1 ELSE 0 END as has_lecture
+                       CASE WHEN MAX(ml.id) IS NOT NULL THEN 1 ELSE 0 END as has_mini_lecture
                 FROM transcripts t
                 LEFT JOIN mini_lectures ml ON t.id = ml.transcript_id
+                GROUP BY t.id, t.text, t.timestamp
                 ORDER BY t.timestamp DESC
             """)
             rows = cursor.fetchall()
@@ -206,7 +207,7 @@ def get_transcripts() -> str:
                 "id": row[0],
                 "text": row[1],
                 "timestamp": row[2],
-                "has_lecture": bool(row[3])
+                "has_mini_lecture": bool(row[3])
             } for row in rows]
         return jsonify(transcripts)
     except Exception as e:

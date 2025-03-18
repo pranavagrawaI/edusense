@@ -31,10 +31,9 @@ class _TranscriptHistoryScreenState extends State<TranscriptHistoryScreen> {
   }
 
   Future<void> _loadTranscripts() async {
-    if (!mounted) return; // Check mounted before calling setState
     setState(() => _isLoading = true);
 
-    // Load local transcripts
+    // 1) Immediately load local transcripts so the UI shows something
     final localMetadata = await TranscriptStorage.loadTranscriptMetadata();
     final localTranscripts =
         localMetadata.map((metadata) {
@@ -48,34 +47,38 @@ class _TranscriptHistoryScreenState extends State<TranscriptHistoryScreen> {
           );
         }).toList();
 
-    if (!mounted) return; // Check again before updating state
     setState(() {
       _transcripts = localTranscripts;
       _isLoading = false;
     });
 
-    // Load transcripts from server
+    // 2) Then try the server in the background
     try {
       final response = await TranscriptApi.getTranscripts();
       if (response.success && response.data != null) {
-        if (!mounted) return;
         setState(() => _isLoading = true);
-        if (!mounted) return;
+        // Show server transcripts
         setState(() {
           _transcripts = response.data!;
         });
-        // Save them locally...
+        // Save them locally
+        for (var t in _transcripts) {
+          final defaultTitle =
+              t.text.length > 30 ? t.text.substring(0, 30) : t.text;
+          await TranscriptStorage.saveTranscriptMetadata(
+            TranscriptMetadata(transcriptId: t.id, title: defaultTitle),
+          );
+        }
       }
     } catch (e) {
-      // Handle error
+      // If server fails, do nothing. We already have local data shown.
     } finally {
-      if (mounted) setState(() => _isLoading = false);
+      setState(() => _isLoading = false);
     }
   }
 
   Future<void> _loadStoredMiniLectures() async {
     final storedIds = await MiniLectureStorage.getStoredMiniLectureIds();
-    if (!mounted) return; // Check if the widget is still in the tree
     setState(() {
       _transcriptsWithLocalMiniLectures = storedIds;
     });
@@ -91,31 +94,40 @@ class _TranscriptHistoryScreenState extends State<TranscriptHistoryScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('History')),
-      body:
-          _isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : _transcripts.isEmpty
-              ? const Center(child: Text('No transcripts yet'))
-              : ListView.builder(
-                itemCount: _transcripts.length,
-                itemBuilder: (context, index) {
-                  final transcript = _transcripts[index];
-                  final hasLocalMiniLecture = _transcriptsWithLocalMiniLectures
-                      .contains(transcript.id);
-                  final isGenerating =
-                      _generatingMiniLectures[transcript.id] == true;
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(title: const Text('Lectures')),
+    body: _isLoading
+        ? const Center(child: CircularProgressIndicator())
+        : RefreshIndicator(
+            onRefresh: _loadData, // calls your refresh method
+            child: _transcripts.isEmpty
+                ? ListView(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: const Center(child: Text('No transcripts yet')),
+                      ),
+                    ],
+                  )
+                : ListView.builder(
+                    itemCount: _transcripts.length,
+                    itemBuilder: (context, index) {
+                      final transcript = _transcripts[index];
+                      final hasLocalMiniLecture =
+                          _transcriptsWithLocalMiniLectures.contains(transcript.id);
+                      final isGenerating = _generatingMiniLectures[transcript.id] == true;
 
-                  return TranscriptCard(
-                    transcript: transcript,
-                    hasLocalMiniLecture: hasLocalMiniLecture,
-                    isGeneratingMiniLecture: isGenerating,
-                    onViewMiniLecture: () => _viewMiniLecture(transcript.id),
-                  );
-                },
-              ),
-    );
-  }
+                      return TranscriptCard(
+                        transcript: transcript,
+                        hasLocalMiniLecture: hasLocalMiniLecture,
+                        isGeneratingMiniLecture: isGenerating,
+                        onViewMiniLecture: () => _viewMiniLecture(transcript.id),
+                      );
+                    },
+                  ),
+          ),
+  );
+}
+
 }
