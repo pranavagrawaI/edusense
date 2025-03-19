@@ -1,0 +1,3 @@
+-keep class com.example.** { *; }
+-keep class io.flutter.** { *; }
+-keep class * extends FlutterActivity

@@ -94,40 +94,47 @@ class _TranscriptHistoryScreenState extends State<TranscriptHistoryScreen> {
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(title: const Text('Lectures')),
-    body: _isLoading
-        ? const Center(child: CircularProgressIndicator())
-        : RefreshIndicator(
-            onRefresh: _loadData, // calls your refresh method
-            child: _transcripts.isEmpty
-                ? ListView(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.8,
-                        child: const Center(child: Text('No transcripts yet')),
-                      ),
-                    ],
-                  )
-                : ListView.builder(
-                    itemCount: _transcripts.length,
-                    itemBuilder: (context, index) {
-                      final transcript = _transcripts[index];
-                      final hasLocalMiniLecture =
-                          _transcriptsWithLocalMiniLectures.contains(transcript.id);
-                      final isGenerating = _generatingMiniLectures[transcript.id] == true;
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Lectures')),
+      body:
+          _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : RefreshIndicator(
+                onRefresh: _loadData, // calls your refresh method
+                child:
+                    _transcripts.isEmpty
+                        ? ListView(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.8,
+                              child: const Center(
+                                child: Text('No transcripts yet'),
+                              ),
+                            ),
+                          ],
+                        )
+                        : ListView.builder(
+                          itemCount: _transcripts.length,
+                          itemBuilder: (context, index) {
+                            final transcript = _transcripts[index];
+                            final hasLocalMiniLecture =
+                                _transcriptsWithLocalMiniLectures.contains(
+                                  transcript.id,
+                                );
+                            final isGenerating =
+                                _generatingMiniLectures[transcript.id] == true;
 
-                      return TranscriptCard(
-                        transcript: transcript,
-                        hasLocalMiniLecture: hasLocalMiniLecture,
-                        isGeneratingMiniLecture: isGenerating,
-                        onViewMiniLecture: () => _viewMiniLecture(transcript.id),
-                      );
-                    },
-                  ),
-          ),
-  );
-}
-
+                            return TranscriptCard(
+                              transcript: transcript,
+                              hasLocalMiniLecture: hasLocalMiniLecture,
+                              isGeneratingMiniLecture: isGenerating,
+                              onViewMiniLecture:
+                                  () => _viewMiniLecture(transcript.id),
+                            );
+                          },
+                        ),
+              ),
+    );
+  }
 }
