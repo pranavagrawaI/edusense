@@ -1,0 +1,2 @@
+-keep class com.example.yourapp.** { *; }
+-dontwarn com.example.yourapp.**

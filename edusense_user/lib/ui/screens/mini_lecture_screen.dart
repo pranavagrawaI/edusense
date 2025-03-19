@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../models/mini_lecture.dart';
-import '../../services/api/mini_lecture_api.dart';
 import '../../services/storage/mini_lecture_storage.dart';
 
 class MiniLectureScreen extends StatefulWidget {
@@ -35,7 +34,9 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
     });
 
     // Try to load locally stored mini-lecture first
-    final storedMiniLecture = await MiniLectureStorage.loadMiniLecture(widget.transcriptId);
+    final storedMiniLecture = await MiniLectureStorage.loadMiniLecture(
+      widget.transcriptId,
+    );
     if (storedMiniLecture != null) {
       setState(() {
         miniLecture = storedMiniLecture;
@@ -43,49 +44,16 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
       });
       return;
     }
-
-    // If not found, generate a new one from the backend
-    await _generateMiniLecture();
-  }
-
-  Future<void> _generateMiniLecture() async {
-    try {
-      final response = await MiniLectureApi.generateMiniLecture(widget.transcriptId);
-
-      if (response.success && response.data != null) {
-        final miniLectureData = response.data!['mini_lecture'];
-        
-        final generatedMiniLecture = MiniLecture.fromJson(miniLectureData);
-
-        // Save locally
-        await MiniLectureStorage.saveMiniLecture(widget.transcriptId, generatedMiniLecture);
-
-        setState(() {
-          miniLecture = generatedMiniLecture;
-          isLoading = false;
-        });
-      } else {
-        throw Exception(response.error ?? 'Failed to generate mini-lecture');
-      }
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error generating mini-lecture: $e')),
-      );
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mini Lecture'),
-      ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : miniLecture == null
+      appBar: AppBar(title: const Text('Mini Lecture')),
+      body:
+          isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : miniLecture == null
               ? const Center(child: Text('No mini-lecture found.'))
               : _buildMiniLectureContent(),
     );
@@ -118,10 +86,7 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        Text(
-          miniLecture!.abstract,
-          style: const TextStyle(fontSize: 16),
-        ),
+        Text(miniLecture!.abstract, style: const TextStyle(fontSize: 16)),
       ],
     );
   }
@@ -158,19 +123,16 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             const SizedBox(height: 4),
-            Text(
-              topic.definition,
-              style: const TextStyle(fontSize: 14),
-            ),
+            Text(topic.definition, style: const TextStyle(fontSize: 14)),
             if (topic.insights.isNotEmpty) ...[
               const SizedBox(height: 8),
               const Text(
                 'Insights:',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               ),
-              ...topic.insights.map((insight) => Text('- $insight'))
+              ...topic.insights.map((insight) => Text('- $insight')),
             ],
-          ],  
+          ],
         ),
       ),
     );
@@ -208,10 +170,7 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
           children: [
             Text(
               'Question ${index + 1}:',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             const SizedBox(height: 8),
             Text(quiz.question),
@@ -234,14 +193,15 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
-                  onPressed: selectedAnswers[index] == null
-                      ? null
-                      : () {
-                          // Mark this question's result as visible
-                          setState(() {
-                            showAnswerForQuestion[index] = true;
-                          });
-                        },
+                  onPressed:
+                      selectedAnswers[index] == null
+                          ? null
+                          : () {
+                            // Mark this question's result as visible
+                            setState(() {
+                              showAnswerForQuestion[index] = true;
+                            });
+                          },
                   child: const Text('Check Answer'),
                 ),
               ],
@@ -276,9 +236,7 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
           const SizedBox(height: 8),
           Text(
             'Explanation: ${quiz.explanation}',
-            style: const TextStyle(
-              fontStyle: FontStyle.italic,
-            ),
+            style: const TextStyle(fontStyle: FontStyle.italic),
           ),
         ],
       ),
