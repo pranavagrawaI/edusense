@@ -260,7 +260,7 @@ Lecture Transcript:
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",  # Or whichever model you prefer
+            model="gpt-4o",
             response_format={"type": "json_object"},
             messages=[
                 {

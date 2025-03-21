@@ -608,3 +608,38 @@
 2025-03-18 23:53:16,278 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:53:16] "GET /transcripts HTTP/1.1" 200 -
 2025-03-18 23:53:20,907 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:53:20] "GET /transcripts HTTP/1.1" 200 -
 2025-03-18 23:54:27,080 - werkzeug - INFO - 172.29.147.133 - - [18/Mar/2025 23:54:27] "GET /transcripts HTTP/1.1" 200 -
+2025-03-21 11:19:14,977 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.50.13:5000
+2025-03-21 11:19:14,977 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-21 11:19:15,009 - werkzeug - INFO -  * Restarting with stat
+2025-03-21 11:19:16,826 - werkzeug - WARNING -  * Debugger is active!
+2025-03-21 11:19:16,842 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-21 11:43:03,063 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.50.13:5000
+2025-03-21 11:43:03,067 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-21 11:43:03,074 - werkzeug - INFO -  * Restarting with stat
+2025-03-21 11:43:06,810 - werkzeug - WARNING -  * Debugger is active!
+2025-03-21 11:43:06,844 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-21 11:52:31,757 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.50.13:5000
+2025-03-21 11:52:31,758 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-21 11:52:31,762 - werkzeug - INFO -  * Restarting with stat
+2025-03-21 11:52:34,502 - werkzeug - WARNING -  * Debugger is active!
+2025-03-21 11:52:34,520 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-21 11:52:39,903 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 11:52:39] "GET /transcripts HTTP/1.1" 200 -
+2025-03-21 11:52:42,349 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 11:52:42] "GET /transcripts HTTP/1.1" 200 -
+2025-03-21 11:55:13,899 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 11:55:13] "GET /transcripts HTTP/1.1" 200 -
+2025-03-21 11:55:27,540 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 11:55:27] "DELETE /transcripts HTTP/1.1" 200 -
+2025-03-21 11:55:38,270 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 11:55:38] "GET /transcripts HTTP/1.1" 200 -
+2025-03-21 11:57:04,580 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-21 11:57:04,605 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 11:57:04] "POST /transcribe HTTP/1.1" 200 -
+2025-03-21 11:57:22,195 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-21 11:57:22,231 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 11:57:22] "POST /generate_mini_lecture/24 HTTP/1.1" 200 -
+2025-03-21 11:57:37,767 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 11:57:37] "GET /transcripts HTTP/1.1" 200 -
+2025-03-21 11:57:40,336 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 11:57:40] "DELETE /transcript/24 HTTP/1.1" 200 -

@@ -1,6 +1,6 @@
 class AppConfig {
   // Server configuration
-  static const String serverIP = '172.29.150.76';
+  static const String serverIP = '172.29.50.13';
   static const int serverPort = 5000;
   static const String serverUrl = 'http://$serverIP:$serverPort';
   
