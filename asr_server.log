@@ -643,3 +643,80 @@
 2025-03-21 11:57:22,231 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 11:57:22] "POST /generate_mini_lecture/24 HTTP/1.1" 200 -
 2025-03-21 11:57:37,767 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 11:57:37] "GET /transcripts HTTP/1.1" 200 -
 2025-03-21 11:57:40,336 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 11:57:40] "DELETE /transcript/24 HTTP/1.1" 200 -
+2025-03-21 12:53:32,808 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.50.13:5000
+2025-03-21 12:53:32,811 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-21 12:53:32,815 - werkzeug - INFO -  * Restarting with stat
+2025-03-21 12:53:34,638 - werkzeug - WARNING -  * Debugger is active!
+2025-03-21 12:53:34,651 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-21 12:53:46,058 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-21 12:53:46,086 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 12:53:46] "POST /transcribe HTTP/1.1" 200 -
+2025-03-21 12:53:51,332 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 12:53:51] "GET /transcripts HTTP/1.1" 200 -
+2025-03-21 12:53:53,879 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 12:53:53] "DELETE /transcript/25 HTTP/1.1" 200 -
+2025-03-21 12:53:56,742 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-21 12:53:56,757 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 12:53:56] "POST /transcribe HTTP/1.1" 200 -
+2025-03-21 12:54:03,010 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-21 12:54:03,013 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 12:54:03] "POST /transcribe HTTP/1.1" 200 -
+2025-03-21 12:54:18,798 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-21 12:54:18,801 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 12:54:18] "POST /transcribe HTTP/1.1" 200 -
+2025-03-21 12:59:59,449 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.50.13:5000
+2025-03-21 12:59:59,449 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-21 12:59:59,452 - werkzeug - INFO -  * Restarting with stat
+2025-03-21 13:00:00,612 - werkzeug - WARNING -  * Debugger is active!
+2025-03-21 13:00:00,621 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-21 13:00:24,937 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-21 13:00:24,959 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 13:00:24] "POST /transcribe HTTP/1.1" 200 -
+2025-03-21 13:00:56,272 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-21 13:00:56,301 - werkzeug - INFO - 172.29.55.201 - - [21/Mar/2025 13:00:56] "POST /generate_mini_lecture/27 HTTP/1.1" 200 -
+2025-03-24 11:39:43,709 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.51.86:5000
+2025-03-24 11:39:43,709 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-24 11:39:43,744 - werkzeug - INFO -  * Restarting with stat
+2025-03-24 11:39:45,376 - werkzeug - WARNING -  * Debugger is active!
+2025-03-24 11:39:45,382 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-24 11:48:01,066 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-24 11:48:01,147 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 11:48:01] "POST /transcribe HTTP/1.1" 200 -
+2025-03-24 11:48:07,848 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 11:48:07] "GET /transcripts HTTP/1.1" 200 -
+2025-03-24 11:48:13,734 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 11:48:13] "DELETE /transcript/28 HTTP/1.1" 200 -
+2025-03-24 11:48:16,145 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 11:48:16] "DELETE /transcript/26 HTTP/1.1" 200 -
+2025-03-24 11:48:20,973 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 11:48:20] "GET /transcripts HTTP/1.1" 200 -
+2025-03-24 11:54:50,129 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.51.86:5000
+2025-03-24 11:54:50,129 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-24 11:54:50,145 - werkzeug - INFO -  * Restarting with stat
+2025-03-24 11:54:51,697 - werkzeug - WARNING -  * Debugger is active!
+2025-03-24 11:54:51,721 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-24 11:55:01,114 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 11:55:01] "GET /transcripts HTTP/1.1" 200 -
+2025-03-24 11:56:25,524 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 11:56:25] "GET /transcripts HTTP/1.1" 200 -
+2025-03-24 11:57:47,155 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 11:57:47] "GET /transcripts HTTP/1.1" 200 -
+2025-03-24 11:57:55,437 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 11:57:55] "GET /transcripts HTTP/1.1" 200 -
+2025-03-24 12:00:13,025 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 12:00:13] "DELETE /transcript/27 HTTP/1.1" 200 -
+2025-03-24 12:00:30,715 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-24 12:00:30,736 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 12:00:30] "POST /transcribe HTTP/1.1" 200 -
+2025-03-24 12:00:41,355 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-24 12:00:41,400 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 12:00:41] "POST /generate_mini_lecture/29 HTTP/1.1" 200 -
+2025-03-24 12:00:56,653 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 12:00:56] "GET /transcripts HTTP/1.1" 200 -
+2025-03-24 12:06:31,840 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 12:06:31] "GET /transcripts HTTP/1.1" 200 -
+2025-03-24 12:06:33,958 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 12:06:33] "DELETE /transcript/29 HTTP/1.1" 200 -
+2025-03-24 12:43:22,246 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 413 Payload Too Large"
+2025-03-24 12:43:22,246 - asr_server - ERROR - Processing failed: Error code: 413 - {'error': {'message': '413: Maximum content size limit (26214400) exceeded (26445338 bytes read)', 'type': 'server_error', 'param': None, 'code': None}}
+2025-03-24 12:43:22,270 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 12:43:22] "[35m[1mPOST /transcribe HTTP/1.1[0m" 500 -
+2025-03-24 12:43:51,066 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-24 12:43:51,221 - werkzeug - INFO -  * Restarting with stat
+2025-03-24 12:44:15,764 - werkzeug - WARNING -  * Debugger is active!
+2025-03-24 12:44:15,782 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-24 12:44:42,860 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 413 Payload Too Large"
+2025-03-24 12:44:42,860 - asr_server - ERROR - Processing failed: Error code: 413 - {'error': {'message': '413: Maximum content size limit (26214400) exceeded (26304758 bytes read)', 'type': 'server_error', 'param': None, 'code': None}}
+2025-03-24 12:44:42,893 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 12:44:42] "[35m[1mPOST /transcribe HTTP/1.1[0m" 500 -
+2025-03-24 12:51:50,007 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 413 Payload Too Large"
+2025-03-24 12:51:50,009 - asr_server - ERROR - Processing failed: Error code: 413 - {'error': {'message': '413: Maximum content size limit (26214400) exceeded (26432142 bytes read)', 'type': 'server_error', 'param': None, 'code': None}}
+2025-03-24 12:51:50,032 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 12:51:50] "[35m[1mPOST /transcribe HTTP/1.1[0m" 500 -
