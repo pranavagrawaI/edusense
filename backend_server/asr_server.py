@@ -3,13 +3,12 @@ import json
 import sqlite3
 import logging
 import subprocess
-from datetime import datetime
 from typing import Tuple, Dict, Optional, Union
 from flask import Flask, request, jsonify
 from flask_limiter import Limiter
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
-from openai import OpenAI
+import openai
 
 # Load environment variables
 load_dotenv()
@@ -21,7 +20,7 @@ if not OPENAI_API_KEY or not FLASK_SECRET_KEY:
     raise ValueError("Missing required environment variables: OPENAI_API_KEY, FLASK_SECRET_KEY")
 
 SERVER_HOST = os.getenv('SERVER_HOST', '0.0.0.0')
-SERVER_PORT = int(os.getenv('SERVER_PORT', '5000'))
+SERVER_PORT = int(os.getenv('SERVER_PORT', '8080'))
 MAX_FILE_SIZE = int(os.getenv('MAX_FILE_SIZE', '16777216'))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, os.getenv('UPLOAD_FOLDER', 'uploads'))
@@ -50,8 +49,8 @@ logging.basicConfig(
     ]
 )
 
-# Load the and initialize the OpenAI client
-client = OpenAI(api_key=OPENAI_API_KEY)
+# Set OpenAI API key globally
+openai.api_key = OPENAI_API_KEY
 
 def init_db() -> None:
     """Initialize the transcripts table."""
@@ -78,7 +77,6 @@ def init_mini_lecture_db() -> None:
             )
         ''')
 
-
 init_db()
 init_mini_lecture_db()
 
@@ -98,7 +96,6 @@ def validate_upload_file(file) -> Optional[Tuple[Dict, int]]:
     if file.tell() > MAX_FILE_SIZE:
         return {"error": "File size exceeds limit"}, 413
     file.seek(0)
-
     return None
 
 def convert_audio_to_wav(input_path: str, output_path: str) -> None:
@@ -160,10 +157,10 @@ def transcribe() -> Union[tuple, str]:
         abs_converted_path = os.path.abspath(converted_path)
         
         with open(abs_converted_path, 'rb') as audio_file:
-            result = client.audio.transcriptions.create(
-            model="whisper-1",
-            file=audio_file,
-            response_format="json"
+            result = openai.Audio.transcriptions.create(
+                model="whisper-1",
+                file=audio_file,
+                response_format="json"
             )
 
         transcription = result.text.strip()
@@ -188,109 +185,12 @@ def transcribe() -> Union[tuple, str]:
     finally:
         cleanup_files(file_path, converted_path)
 
-@app.route('/transcripts', methods=['GET'])
-def get_transcripts() -> str:
-    """Fetch all transcripts along with their lecture status."""
-    try:
-        with sqlite3.connect(DB_PATH) as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                SELECT t.id, t.text, t.timestamp,
-                       CASE WHEN MAX(ml.id) IS NOT NULL THEN 1 ELSE 0 END as has_mini_lecture
-                FROM transcripts t
-                LEFT JOIN mini_lectures ml ON t.id = ml.transcript_id
-                GROUP BY t.id, t.text, t.timestamp
-                ORDER BY t.timestamp DESC
-            """)
-            rows = cursor.fetchall()
-            transcripts = [{
-                "id": row[0],
-                "text": row[1],
-                "timestamp": row[2],
-                "has_mini_lecture": bool(row[3])
-            } for row in rows]
-        return jsonify(transcripts)
-    except Exception as e:
-        logging.error(f"Error fetching transcripts: {e}")
-        return jsonify({"error": str(e)}), 500
-
-def generate_mini_lecture(transcript_text: str) -> dict:
-    """
-    Generate a mini-lecture (abstract, key topics, and MCQs) from a transcript using OpenAI.
-    Returns a dictionary with keys: 'abstract', 'key_topics', and 'mcqs'.
-    """
-    prompt = f"""
-Based on the following lecture transcript, generate a mini-lecture with the following structure:
-
-1. Abstract: Write 4–6 sentences summarizing the central themes, key points, and overarching message of the lecture.
-2. Key Topics & Explanations: Identify the main topics and significant subtopics from the lecture. For each topic:
-   - A one-sentence definition or overview.
-   - 1–2 essential insights or critical points emphasized during the lecture.
-3. MCQs: Provide 2–3 multiple-choice questions. Each question must include:
-   - The question text.
-   - Four options (A, B, C, D) as plausible distractors.
-   - The correct answer (A/B/C/D).
-   - A brief explanation of why the answer is correct.
-
-Return the mini-lecture in valid JSON with the following keys:
-{{
-  "abstract": "...",
-  "key_topics": [
-    {{
-      "topic": "...",
-      "definition": "...",
-      "insights": ["...", "..."]
-    }},
-    ...
-  ],
-  "mcqs": [
-    {{
-      "question": "...",
-      "options": {{"A": "...", "B": "...", "C": "...", "D": "..."}},
-      "correct_answer": "...",
-      "explanation": "..."
-    }},
-    ...
-  ]
-}}
-
-Lecture Transcript:
-{transcript_text}
-"""
-
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            response_format={"type": "json_object"},
-            messages=[
-                {
-                    "role": "system",
-                    "content": (
-                        "You are a helpful educational assistant that creates a mini-lecture based on the transcript. "
-                        "Always return a valid JSON object with the keys: 'abstract', 'key_topics', and 'mcqs'."
-                    )
-                },
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-        )
-
-        content = response.choices[0].message.content
-
-        # Attempt to parse the content as JSON
-        return json.loads(content)
-    except Exception as e:
-        logging.error(f"Error generating mini-lecture: {e}")
-        raise
-
-
 @app.route('/generate_mini_lecture/<int:transcript_id>', methods=['POST'])
 @limiter.limit(RATE_LIMIT_LECTURE)
 def create_mini_lecture(transcript_id: int):
     """
     Generate a mini-lecture for the specified transcript.
-    Stores the mini-lecture JSON in the mini_lectures table
-    and returns the generated data to the client.
+    Stores the mini-lecture JSON in the mini_lectures table and returns the generated data.
     """
     try:
         with sqlite3.connect(DB_PATH) as conn:
@@ -321,6 +221,66 @@ def create_mini_lecture(transcript_id: int):
     except Exception as e:
         logging.error(f"Error in mini-lecture generation endpoint: {e}", exc_info=True)
         return jsonify({"error": str(e)}), 500
+
+def generate_mini_lecture(transcript_text: str) -> dict:
+    """
+    Generate a mini-lecture from the transcript text using OpenAI's ChatCompletion API.
+    """
+    prompt = f"""
+Based on the following lecture transcript, generate a mini-lecture with the following structure:
+
+1. Abstract: Write 4–6 sentences summarizing the central themes, key points, and overarching message of the lecture.
+2. Key Topics & Explanations: Identify the main topics and significant subtopics from the lecture. For each topic:
+   - A one-sentence definition or overview.
+   - 1–2 essential insights or critical points emphasized during the lecture.
+3. MCQs: Provide 2–3 multiple-choice questions. Each question must include:
+   - The question text.
+   - Four options (A, B, C, D) as plausible distractors.
+   - The correct answer (A/B/C/D).
+   - A brief explanation of why the answer is correct.
+
+Return the mini-lecture in valid JSON with the following keys:
+{{
+  "abstract": "...",
+  "key_topics": [
+    {{
+      "topic": "...",
+      "definition": "...",
+      "insights": ["...", "..."]
+    }}
+  ],
+  "mcqs": [
+    {{
+      "question": "...",
+      "options": {{"A": "...", "B": "...", "C": "...", "D": "..."}},
+      "correct_answer": "...",
+      "explanation": "..."
+    }}
+  ]
+}}
+
+Lecture Transcript:
+{transcript_text}
+"""
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a helpful educational assistant that creates a mini-lecture based on the transcript. "
+                        "Always return a valid JSON object with the keys: 'abstract', 'key_topics', and 'mcqs'."
+                    )
+                },
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+        )
+        content = response.choices[0].message.content
+        return json.loads(content)
+    except Exception as e:
+        raise Exception(f"Error generating mini-lecture: {e}")
 
 @app.route('/transcript/<int:transcript_id>', methods=['DELETE'])
 def delete_transcript(transcript_id: int) -> str:

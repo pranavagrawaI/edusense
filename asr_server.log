@@ -720,3 +720,19 @@
 2025-03-24 12:51:50,007 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 413 Payload Too Large"
 2025-03-24 12:51:50,009 - asr_server - ERROR - Processing failed: Error code: 413 - {'error': {'message': '413: Maximum content size limit (26214400) exceeded (26432142 bytes read)', 'type': 'server_error', 'param': None, 'code': None}}
 2025-03-24 12:51:50,032 - werkzeug - INFO - 172.29.54.37 - - [24/Mar/2025 12:51:50] "[35m[1mPOST /transcribe HTTP/1.1[0m" 500 -
+2025-03-26 15:40:41,559 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.146.65:5000
+2025-03-26 15:40:41,559 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-26 15:40:41,576 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 15:40:42,722 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 15:40:42,722 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-26 17:07:48,686 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.146.65:5000
+2025-03-26 17:07:48,686 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-26 17:07:48,717 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 17:07:49,834 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 17:07:49,834 - werkzeug - INFO -  * Debugger PIN: 633-125-271
