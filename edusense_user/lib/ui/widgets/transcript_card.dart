@@ -80,8 +80,8 @@ class TranscriptCard extends StatelessWidget {
                                     : Colors.blue,
                           ),
                         ),
-                      onPressed: onViewMiniLecture,
-                      ) 
+                        onPressed: onViewMiniLecture,
+                      ),
                   ],
                 ),
               ],

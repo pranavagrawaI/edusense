@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-
 import '../../models/mini_lecture.dart';
 import '../../services/storage/mini_lecture_storage.dart';
+import '../../services/api/mini_lecture_api.dart';
 
 class MiniLectureScreen extends StatefulWidget {
   final int transcriptId;
 
-  const MiniLectureScreen({super.key, required this.transcriptId});
+  const MiniLectureScreen({Key? key, required this.transcriptId}) : super(key: key);
 
   @override
   _MiniLectureScreenState createState() => _MiniLectureScreenState();
@@ -33,10 +33,9 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
       isLoading = true;
     });
 
-    // Try to load locally stored mini-lecture first
-    final storedMiniLecture = await MiniLectureStorage.loadMiniLecture(
-      widget.transcriptId,
-    );
+    // Try to load the mini-lecture from local storage.
+    final storedMiniLecture =
+        await MiniLectureStorage.loadMiniLecture(widget.transcriptId);
     if (storedMiniLecture != null) {
       setState(() {
         miniLecture = storedMiniLecture;
@@ -44,24 +43,55 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
       });
       return;
     }
+
+    // If not found locally, fetch from the server using the GET endpoint.
+    final response = await MiniLectureApi.getMiniLecture(widget.transcriptId);
+    if (response.success && response.data != null) {
+      final miniLectureData = response.data as Map<String, dynamic>;
+      final fetchedLecture = MiniLecture.fromJson(miniLectureData);
+
+      // Save the fetched mini-lecture locally.
+      await MiniLectureStorage.saveMiniLecture(widget.transcriptId, fetchedLecture);
+      setState(() {
+        miniLecture = fetchedLecture;
+        isLoading = false;
+      });
+    } else {
+      // Optionally, show an error message if fetching fails.
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Failed to load mini lecture.")),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Mini Lecture')),
-      body:
-          isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : miniLecture == null
-              ? const Center(child: Text('No mini-lecture found.'))
-              : _buildMiniLectureContent(),
+      body: RefreshIndicator(
+        onRefresh: _loadOrGenerateMiniLecture,
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : miniLecture == null
+                ? ListView(
+                    children: const [
+                      SizedBox(
+                        height: 200,
+                        child: Center(child: Text('No mini-lecture found. Pull to refresh.')),
+                      )
+                    ],
+                  )
+                : _buildMiniLectureContent(),
+      ),
     );
   }
 
   Widget _buildMiniLectureContent() {
-    // We’ll build everything in a single scrollable view:
     return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,12 +121,11 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
     );
   }
 
-  // 2) Key Topics
+  // 2) Key Topics Section
   Widget _buildKeyTopicsSection() {
     if (miniLecture!.keyTopics.isEmpty) {
       return const SizedBox.shrink();
     }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -143,7 +172,6 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
     if (miniLecture!.mcqs.isEmpty) {
       return const SizedBox.shrink();
     }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -193,20 +221,18 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
-                  onPressed:
-                      selectedAnswers[index] == null
-                          ? null
-                          : () {
-                            // Mark this question's result as visible
-                            setState(() {
-                              showAnswerForQuestion[index] = true;
-                            });
-                          },
+                  onPressed: selectedAnswers[index] == null
+                      ? null
+                      : () {
+                          setState(() {
+                            showAnswerForQuestion[index] = true;
+                          });
+                        },
                   child: const Text('Check Answer'),
                 ),
               ],
             ),
-            // If "Check Answer" was pressed, show the correctness + explanation
+            // If "Check Answer" was pressed, show the feedback.
             if (showAnswerForQuestion[index] == true)
               _buildResultsFeedback(quiz, index),
           ],
@@ -218,7 +244,6 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
   Widget _buildResultsFeedback(MCQ quiz, int index) {
     final userAnswer = selectedAnswers[index];
     final isCorrect = userAnswer == quiz.correctAnswer;
-
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Column(

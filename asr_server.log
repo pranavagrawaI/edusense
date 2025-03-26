@@ -736,3 +736,53 @@
 2025-03-26 17:07:48,717 - werkzeug - INFO -  * Restarting with stat
 2025-03-26 17:07:49,834 - werkzeug - WARNING -  * Debugger is active!
 2025-03-26 17:07:49,834 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-26 19:08:40,500 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.146.65:5000
+2025-03-26 19:08:40,500 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-26 19:08:40,500 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 19:08:41,610 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 19:08:41,633 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-26 19:10:21,281 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.146.65:5000
+2025-03-26 19:10:21,281 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-26 19:10:21,285 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 19:10:22,445 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 19:10:22,463 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-26 19:11:45,643 - asr_server - ERROR - Processing failed: 
+
+You tried to access openai.Audio, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2025-03-26 19:11:45,658 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 19:11:45] "[35m[1mPOST /transcribe HTTP/1.1[0m" 500 -
+2025-03-26 19:16:29,610 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-26 19:16:29,758 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 19:16:32,164 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 19:16:32,174 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-26 19:17:13,614 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-26 19:17:13,642 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 19:17:13] "POST /transcribe HTTP/1.1" 200 -
+2025-03-26 19:17:30,563 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-26 19:17:30,595 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 19:17:30] "POST /generate_mini_lecture/30 HTTP/1.1" 200 -
+2025-03-26 19:17:58,708 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 19:17:58] "[31m[1mGET /transcripts HTTP/1.1[0m" 405 -
+2025-03-26 19:20:34,012 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 19:20:34] "[31m[1mGET /transcripts HTTP/1.1[0m" 405 -
+2025-03-26 19:20:44,825 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 19:20:44] "[31m[1mGET /transcripts HTTP/1.1[0m" 405 -
+2025-03-26 19:22:31,031 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-26 19:22:31,247 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 19:22:33,246 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 19:22:33,263 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-26 19:22:50,848 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 19:22:50] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 19:27:56,493 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 19:27:56] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 19:43:56,007 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-26 19:43:56,151 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 19:43:57,353 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 19:43:57,365 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-26 20:00:25,314 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 20:00:25] "GET /mini_lecture/30 HTTP/1.1" 200 -
+2025-03-26 20:08:23,644 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 20:08:23] "GET /transcripts HTTP/1.1" 200 -

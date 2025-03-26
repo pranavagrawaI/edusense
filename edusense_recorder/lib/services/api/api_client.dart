@@ -15,19 +15,11 @@ class ApiResponse<T> {
   });
 
   factory ApiResponse.success(T data, int statusCode) {
-    return ApiResponse(
-      success: true,
-      data: data,
-      statusCode: statusCode,
-    );
+    return ApiResponse(success: true, data: data, statusCode: statusCode);
   }
 
   factory ApiResponse.error(String error, int statusCode) {
-    return ApiResponse(
-      success: false,
-      error: error,
-      statusCode: statusCode,
-    );
+    return ApiResponse(success: false, error: error, statusCode: statusCode);
   }
 }
 
@@ -39,10 +31,7 @@ class ApiClient {
     required T Function(dynamic data) fromJson,
   }) async {
     try {
-      final response = await http.get(
-        Uri.parse(url),
-        headers: headers,
-      );
+      final response = await http.get(Uri.parse(url), headers: headers);
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final data = json.decode(response.body);
@@ -92,10 +81,7 @@ class ApiClient {
     Map<String, String>? headers,
   }) async {
     try {
-      final response = await http.delete(
-        Uri.parse(url),
-        headers: headers,
-      );
+      final response = await http.delete(Uri.parse(url), headers: headers);
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return ApiResponse.success(true, response.statusCode);
@@ -109,4 +95,4 @@ class ApiClient {
       return ApiResponse.error('Connection error: $e', 0);
     }
   }
-} 
+}
