@@ -786,3 +786,344 @@ A detailed migration guide is available here: https://github.com/openai/openai-p
 2025-03-26 19:43:57,365 - werkzeug - INFO -  * Debugger PIN: 633-125-271
 2025-03-26 20:00:25,314 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 20:00:25] "GET /mini_lecture/30 HTTP/1.1" 200 -
 2025-03-26 20:08:23,644 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 20:08:23] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 22:35:02,998 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.146.65:5000
+2025-03-26 22:35:02,998 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-26 22:35:03,020 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 22:35:04,149 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 22:35:04,166 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-26 22:45:11,348 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-26 22:45:11,389 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:45:11] "POST /transcribe HTTP/1.1" 200 -
+2025-03-26 22:47:16,077 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-26 22:47:16,106 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:47:16] "POST /generate_mini_lecture/31 HTTP/1.1" 200 -
+2025-03-26 22:47:25,209 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:47:25] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 22:47:31,712 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:47:31] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 22:50:02,242 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:50:02] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 22:50:04,184 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:50:04] "GET /mini_lecture/31 HTTP/1.1" 200 -
+2025-03-26 22:51:03,597 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:51:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 22:51:55,946 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:51:55] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 22:52:24,304 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-26 22:52:24,329 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:52:24] "POST /transcribe HTTP/1.1" 200 -
+2025-03-26 22:52:39,154 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-26 22:52:39,177 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:52:39] "POST /generate_mini_lecture/32 HTTP/1.1" 200 -
+2025-03-26 22:53:12,657 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:53:12] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 22:53:28,595 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:53:28] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 22:53:30,776 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:53:30] "GET /mini_lecture/32 HTTP/1.1" 200 -
+2025-03-26 22:53:35,765 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 22:53:35] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 23:13:37,403 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-26 23:13:37,598 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 23:13:39,834 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 23:13:39,857 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-26 23:15:00,463 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 413 Payload Too Large"
+2025-03-26 23:15:00,467 - asr_server - ERROR - Processing failed: Error code: 413 - {'error': {'message': '413: Maximum content size limit (26214400) exceeded (26294972 bytes read)', 'type': 'server_error', 'param': None, 'code': None}}
+2025-03-26 23:15:00,487 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:15:00] "[35m[1mPOST /transcribe HTTP/1.1[0m" 500 -
+2025-03-26 23:27:07,101 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-26 23:27:07,395 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 23:27:08,628 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 23:27:08,636 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-26 23:27:36,363 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_000.wav
+2025-03-26 23:28:11,364 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-26 23:28:11,364 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_001.wav
+2025-03-26 23:28:53,258 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-26 23:28:53,258 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_002.wav
+2025-03-26 23:29:32,441 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-26 23:29:32,444 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_003.wav
+2025-03-26 23:29:55,536 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-26 23:29:55,597 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:29:55] "POST /transcribe HTTP/1.1" 200 -
+2025-03-26 23:30:38,657 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-26 23:30:38,730 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:30:38] "POST /generate_mini_lecture/33 HTTP/1.1" 200 -
+2025-03-26 23:31:15,192 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-26 23:31:15,371 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 23:31:17,211 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 23:31:17,232 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-26 23:32:17,977 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:32:17] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 23:32:19,630 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:32:19] "[33mGET /mini_lecture/33 HTTP/1.1[0m" 404 -
+2025-03-26 23:32:21,927 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:32:21] "[33mGET /mini_lecture/33 HTTP/1.1[0m" 404 -
+2025-03-26 23:32:23,130 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:32:23] "[33mGET /mini_lecture/33 HTTP/1.1[0m" 404 -
+2025-03-26 23:32:26,491 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:32:26] "[33mGET /mini_lecture/33 HTTP/1.1[0m" 404 -
+2025-03-26 23:32:27,573 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:32:27] "[33mGET /mini_lecture/33 HTTP/1.1[0m" 404 -
+2025-03-26 23:32:34,217 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:32:34] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 23:32:53,597 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:32:53] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 23:32:55,654 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:32:55] "[33mGET /mini_lecture/33 HTTP/1.1[0m" 404 -
+2025-03-26 23:33:01,669 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:33:01] "[33mGET /mini_lecture/33 HTTP/1.1[0m" 404 -
+2025-03-26 23:33:52,751 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_000.wav
+2025-03-26 23:33:57,875 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-26 23:33:57,899 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:33:57] "POST /transcribe HTTP/1.1" 200 -
+2025-03-26 23:34:11,545 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-26 23:34:11,579 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:34:11] "POST /generate_mini_lecture/34 HTTP/1.1" 200 -
+2025-03-26 23:34:22,530 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:34:22] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 23:34:24,484 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:34:24] "[33mGET /mini_lecture/34 HTTP/1.1[0m" 404 -
+2025-03-26 23:35:58,786 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-26 23:35:58,934 - werkzeug - INFO -  * Restarting with stat
+2025-03-26 23:36:00,262 - werkzeug - WARNING -  * Debugger is active!
+2025-03-26 23:36:00,286 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-26 23:36:12,144 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:36:12] "GET /mini_lecture/33 HTTP/1.1" 200 -
+2025-03-26 23:36:20,032 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:36:20] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 23:36:21,092 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:36:21] "GET /mini_lecture/34 HTTP/1.1" 200 -
+2025-03-26 23:36:24,974 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:36:24] "GET /transcripts HTTP/1.1" 200 -
+2025-03-26 23:36:39,660 - werkzeug - INFO - 172.29.147.133 - - [26/Mar/2025 23:36:39] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 00:01:17,309 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.146.65:5000
+2025-03-27 00:01:17,309 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-27 00:01:17,312 - werkzeug - INFO -  * Restarting with stat
+2025-03-27 00:01:18,484 - werkzeug - WARNING -  * Debugger is active!
+2025-03-27 00:01:18,486 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-27 00:07:25,596 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_000.wav
+2025-03-27 00:08:05,931 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-27 00:08:05,931 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_001.wav
+2025-03-27 00:08:10,313 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-27 00:08:10,343 - werkzeug - INFO - 172.29.147.133 - - [27/Mar/2025 00:08:10] "POST /transcribe HTTP/1.1" 200 -
+2025-03-27 00:08:28,317 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 00:08:28,463 - werkzeug - INFO - 172.29.147.133 - - [27/Mar/2025 00:08:28] "POST /generate_mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 00:09:55,230 - werkzeug - INFO - 172.29.147.133 - - [27/Mar/2025 00:09:55] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 00:10:01,373 - werkzeug - INFO - 172.29.147.133 - - [27/Mar/2025 00:10:01] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 00:10:09,165 - werkzeug - INFO - 172.29.147.133 - - [27/Mar/2025 00:10:09] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 00:10:38,230 - werkzeug - INFO - 172.29.147.133 - - [27/Mar/2025 00:10:38] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 00:34:39,593 - werkzeug - INFO - 172.29.147.133 - - [27/Mar/2025 00:34:39] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 12:43:50,253 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.50.32:5000
+2025-03-27 12:43:50,253 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-27 12:43:50,274 - werkzeug - INFO -  * Restarting with stat
+2025-03-27 12:43:52,704 - werkzeug - WARNING -  * Debugger is active!
+2025-03-27 12:43:52,726 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-27 13:10:39,446 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.50.32:5000
+2025-03-27 13:10:39,448 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-27 13:10:39,450 - werkzeug - INFO -  * Restarting with stat
+2025-03-27 13:10:41,171 - werkzeug - WARNING -  * Debugger is active!
+2025-03-27 13:10:41,186 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-27 13:13:42,318 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.50.32:5000
+2025-03-27 13:13:42,318 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-27 13:13:42,321 - werkzeug - INFO -  * Restarting with stat
+2025-03-27 13:13:43,907 - werkzeug - WARNING -  * Debugger is active!
+2025-03-27 13:13:43,918 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-27 13:22:22,458 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.50.10:5000
+2025-03-27 13:22:22,458 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-27 13:22:22,458 - werkzeug - INFO -  * Restarting with stat
+2025-03-27 13:22:24,104 - werkzeug - WARNING -  * Debugger is active!
+2025-03-27 13:22:24,104 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-27 13:24:19,060 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:24:19] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:24:22,350 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:24:22] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:24:40,232 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:24:40] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:25:36,895 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:25:36] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:26:46,333 - werkzeug - INFO -  * Detected change in 'c:\\Users\\hipra\\OneDrive\\Desktop\\Projects\\EduSense\\edusense\\backend_server\\asr_server.py', reloading
+2025-03-27 13:26:46,477 - werkzeug - INFO -  * Restarting with stat
+2025-03-27 13:26:48,249 - werkzeug - WARNING -  * Debugger is active!
+2025-03-27 13:26:48,264 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-27 13:27:33,616 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_000.wav
+2025-03-27 13:27:35,430 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-27 13:27:35,470 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:27:35] "POST /transcribe HTTP/1.1" 200 -
+2025-03-27 13:27:48,247 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 13:27:48,286 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:27:48] "POST /generate_mini_lecture/36 HTTP/1.1" 200 -
+2025-03-27 13:27:59,061 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:27:59] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:28:10,781 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:28:10] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:28:15,049 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:28:15] "GET /mini_lecture/36 HTTP/1.1" 200 -
+2025-03-27 13:28:21,015 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:28:21] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:28:39,061 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:28:39] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:28:42,183 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:28:42] "DELETE /transcript/36 HTTP/1.1" 200 -
+2025-03-27 13:28:44,538 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:28:44] "DELETE /transcript/34 HTTP/1.1" 200 -
+2025-03-27 13:28:46,566 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:28:46] "DELETE /transcript/33 HTTP/1.1" 200 -
+2025-03-27 13:28:47,816 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:28:47] "DELETE /transcript/32 HTTP/1.1" 200 -
+2025-03-27 13:28:49,292 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:28:49] "DELETE /transcript/31 HTTP/1.1" 200 -
+2025-03-27 13:28:50,682 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:28:50] "DELETE /transcript/30 HTTP/1.1" 200 -
+2025-03-27 13:28:55,904 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:28:55] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:29:05,647 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:29:05] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:56:51,044 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.50.10:5000
+2025-03-27 13:56:51,044 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-27 13:56:51,063 - werkzeug - INFO -  * Restarting with stat
+2025-03-27 13:56:52,178 - werkzeug - WARNING -  * Debugger is active!
+2025-03-27 13:56:52,200 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-27 13:57:00,971 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_000.wav
+2025-03-27 13:57:20,047 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-27 13:57:20,070 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:57:20] "POST /transcribe HTTP/1.1" 200 -
+2025-03-27 13:57:36,847 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 13:57:36,870 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:57:36] "POST /generate_mini_lecture/37 HTTP/1.1" 200 -
+2025-03-27 13:57:49,964 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:57:49] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:57:56,911 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:57:56] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:57:58,214 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:57:58] "GET /mini_lecture/37 HTTP/1.1" 200 -
+2025-03-27 13:58:03,258 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:58:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:58:08,846 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:58:08] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 13:58:12,930 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:58:12] "DELETE /transcript/37 HTTP/1.1" 200 -
+2025-03-27 13:58:23,613 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 13:58:23] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:13:33,398 - werkzeug - INFO - 172.29.50.232 - - [27/Mar/2025 14:13:33] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:13:40,549 - werkzeug - INFO - 172.29.52.170 - - [27/Mar/2025 14:13:40] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:13:43,002 - werkzeug - INFO - 172.29.50.232 - - [27/Mar/2025 14:13:43] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:13:45,204 - werkzeug - INFO - 172.28.15.180 - - [27/Mar/2025 14:13:45] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:13:47,680 - werkzeug - INFO - 172.29.53.151 - - [27/Mar/2025 14:13:47] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:13:51,622 - werkzeug - INFO - 172.28.15.180 - - [27/Mar/2025 14:13:51] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 14:13:52,888 - werkzeug - INFO - 172.29.52.170 - - [27/Mar/2025 14:13:52] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 14:13:59,810 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 14:13:59] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:14:09,066 - werkzeug - INFO - 172.29.53.151 - - [27/Mar/2025 14:14:09] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 14:14:19,043 - werkzeug - INFO - 172.29.53.142 - - [27/Mar/2025 14:14:19] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:14:22,052 - werkzeug - INFO - 172.29.52.12 - - [27/Mar/2025 14:14:22] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:14:25,630 - werkzeug - INFO - 172.29.53.142 - - [27/Mar/2025 14:14:25] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 14:14:28,243 - werkzeug - INFO - 172.29.52.12 - - [27/Mar/2025 14:14:28] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:14:31,727 - werkzeug - INFO - 172.29.49.235 - - [27/Mar/2025 14:14:31] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:14:34,557 - werkzeug - INFO - 172.29.52.12 - - [27/Mar/2025 14:14:34] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 14:14:42,965 - werkzeug - INFO - 172.29.53.80 - - [27/Mar/2025 14:14:42] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:14:44,698 - werkzeug - INFO - 172.29.49.235 - - [27/Mar/2025 14:14:44] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 14:14:52,469 - werkzeug - INFO - 172.29.53.80 - - [27/Mar/2025 14:14:52] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 14:14:53,086 - werkzeug - INFO - 172.29.50.232 - - [27/Mar/2025 14:14:53] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 14:14:55,323 - werkzeug - INFO - 172.29.52.175 - - [27/Mar/2025 14:14:55] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:15:00,612 - werkzeug - INFO - 172.29.52.175 - - [27/Mar/2025 14:15:00] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 14:15:50,208 - werkzeug - INFO - 172.29.53.80 - - [27/Mar/2025 14:15:50] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:15:51,162 - werkzeug - INFO - 172.29.53.80 - - [27/Mar/2025 14:15:51] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:17:12,285 - werkzeug - INFO - 172.29.53.151 - - [27/Mar/2025 14:17:12] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:17:15,420 - werkzeug - INFO - 172.29.53.151 - - [27/Mar/2025 14:17:15] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 14:17:33,011 - werkzeug - INFO - 172.29.53.142 - - [27/Mar/2025 14:17:33] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:17:36,155 - werkzeug - INFO - 172.29.53.142 - - [27/Mar/2025 14:17:36] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 14:18:59,670 - werkzeug - INFO - 172.28.15.180 - - [27/Mar/2025 14:18:59] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:19:02,459 - werkzeug - INFO - 172.28.15.180 - - [27/Mar/2025 14:19:02] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:19:06,538 - werkzeug - INFO - 172.29.52.175 - - [27/Mar/2025 14:19:06] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:19:13,374 - werkzeug - INFO - 172.29.50.117 - - [27/Mar/2025 14:19:13] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:19:14,764 - werkzeug - INFO - 172.29.52.175 - - [27/Mar/2025 14:19:14] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:19:16,769 - werkzeug - INFO - 172.29.50.117 - - [27/Mar/2025 14:19:16] "GET /mini_lecture/35 HTTP/1.1" 200 -
+2025-03-27 14:19:22,420 - werkzeug - INFO - 172.29.52.175 - - [27/Mar/2025 14:19:22] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:20:38,048 - werkzeug - INFO - 172.29.52.12 - - [27/Mar/2025 14:20:38] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:20:40,907 - werkzeug - INFO - 172.29.52.12 - - [27/Mar/2025 14:20:40] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:45:41,305 - werkzeug - INFO - 172.29.53.142 - - [27/Mar/2025 14:45:41] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:45:48,618 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_000.wav
+2025-03-27 14:46:05,604 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-27 14:46:05,604 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_001.wav
+2025-03-27 14:46:19,439 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-27 14:46:19,439 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_002.wav
+2025-03-27 14:46:35,574 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-27 14:46:35,574 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_003.wav
+2025-03-27 14:46:50,012 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-27 14:46:50,023 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_004.wav
+2025-03-27 14:47:04,550 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-27 14:47:04,592 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 14:47:04] "POST /transcribe HTTP/1.1" 200 -
+2025-03-27 14:47:29,638 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-27 14:47:29,661 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 14:47:29] "POST /generate_mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:47:43,337 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 14:47:43] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:47:52,354 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 14:47:52] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:47:54,090 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 14:47:54] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:48:04,237 - werkzeug - INFO - 172.29.50.232 - - [27/Mar/2025 14:48:04] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:48:04,687 - werkzeug - INFO - 172.29.53.151 - - [27/Mar/2025 14:48:04] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:48:09,534 - werkzeug - INFO - 172.29.52.175 - - [27/Mar/2025 14:48:09] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:48:11,894 - werkzeug - INFO - 172.29.52.175 - - [27/Mar/2025 14:48:11] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:48:12,088 - werkzeug - INFO - 172.29.53.151 - - [27/Mar/2025 14:48:12] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:48:13,389 - werkzeug - INFO - 172.29.54.89 - - [27/Mar/2025 14:48:13] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:48:13,440 - werkzeug - INFO - 172.29.49.235 - - [27/Mar/2025 14:48:13] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:48:16,275 - werkzeug - INFO - 172.29.53.151 - - [27/Mar/2025 14:48:16] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:48:20,317 - werkzeug - INFO - 172.29.49.235 - - [27/Mar/2025 14:48:20] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:48:21,256 - werkzeug - INFO - 172.29.53.80 - - [27/Mar/2025 14:48:21] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:48:21,902 - werkzeug - INFO - 172.29.53.151 - - [27/Mar/2025 14:48:21] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:48:23,383 - werkzeug - INFO - 172.29.52.170 - - [27/Mar/2025 14:48:23] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:48:25,220 - werkzeug - INFO - 172.29.52.170 - - [27/Mar/2025 14:48:25] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:48:26,005 - werkzeug - INFO - 172.29.50.232 - - [27/Mar/2025 14:48:26] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:48:30,104 - werkzeug - INFO - 172.29.53.80 - - [27/Mar/2025 14:48:30] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:48:31,291 - werkzeug - INFO - 172.29.53.142 - - [27/Mar/2025 14:48:31] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:48:33,698 - werkzeug - INFO - 172.28.15.180 - - [27/Mar/2025 14:48:33] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:48:33,723 - werkzeug - INFO - 172.29.53.142 - - [27/Mar/2025 14:48:33] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:48:43,617 - werkzeug - INFO - 172.28.15.180 - - [27/Mar/2025 14:48:43] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:48:48,837 - werkzeug - INFO - 172.29.53.142 - - [27/Mar/2025 14:48:48] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:49:14,254 - werkzeug - INFO - 172.29.50.117 - - [27/Mar/2025 14:49:14] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:49:16,306 - werkzeug - INFO - 172.29.52.12 - - [27/Mar/2025 14:49:16] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:49:17,467 - werkzeug - INFO - 172.29.52.12 - - [27/Mar/2025 14:49:17] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:49:18,567 - werkzeug - INFO - 172.29.53.80 - - [27/Mar/2025 14:49:18] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:49:19,052 - werkzeug - INFO - 172.29.53.142 - - [27/Mar/2025 14:49:19] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:49:19,699 - werkzeug - INFO - 172.29.53.80 - - [27/Mar/2025 14:49:19] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:49:21,200 - werkzeug - INFO - 172.29.50.117 - - [27/Mar/2025 14:49:21] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:49:32,542 - werkzeug - INFO - 172.29.52.12 - - [27/Mar/2025 14:49:32] "GET /mini_lecture/38 HTTP/1.1" 200 -
+2025-03-27 14:50:45,778 - werkzeug - INFO - 172.29.52.170 - - [27/Mar/2025 14:50:45] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:50:54,149 - werkzeug - INFO - 172.29.52.12 - - [27/Mar/2025 14:50:54] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:50:55,418 - werkzeug - INFO - 172.29.52.12 - - [27/Mar/2025 14:50:55] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:50:56,685 - werkzeug - INFO - 172.29.52.12 - - [27/Mar/2025 14:50:56] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:51:04,432 - werkzeug - INFO - 172.28.15.180 - - [27/Mar/2025 14:51:04] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:51:07,767 - werkzeug - INFO - 172.29.52.175 - - [27/Mar/2025 14:51:07] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:51:12,968 - werkzeug - INFO - 172.29.50.232 - - [27/Mar/2025 14:51:12] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:51:14,288 - werkzeug - INFO - 172.29.52.175 - - [27/Mar/2025 14:51:14] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:51:32,383 - werkzeug - INFO - 172.29.49.235 - - [27/Mar/2025 14:51:32] "GET /transcripts HTTP/1.1" 200 -
+2025-03-27 14:51:35,937 - werkzeug - INFO - 172.29.53.151 - - [27/Mar/2025 14:51:35] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 11:46:17,088 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.50.10:5000
+2025-03-28 11:46:17,088 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-28 11:46:17,104 - werkzeug - INFO -  * Restarting with stat
+2025-03-28 11:46:18,209 - werkzeug - WARNING -  * Debugger is active!
+2025-03-28 11:46:18,225 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-28 11:49:32,571 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.29.50.10:5000
+2025-03-28 11:49:32,572 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-03-28 11:49:32,575 - werkzeug - INFO -  * Restarting with stat
+2025-03-28 11:49:33,656 - werkzeug - WARNING -  * Debugger is active!
+2025-03-28 11:49:33,672 - werkzeug - INFO -  * Debugger PIN: 633-125-271
+2025-03-28 11:49:36,809 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 11:49:36] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 11:49:51,073 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 11:49:51] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 11:50:27,135 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 11:50:27] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 11:58:01,656 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 11:58:01] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 12:04:13,805 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 12:04:13] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 12:14:54,710 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 12:14:54] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 12:34:47,019 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_000.wav
+2025-03-28 12:35:01,187 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-28 12:35:01,191 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_001.wav
+2025-03-28 12:35:15,338 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-28 12:35:15,338 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_002.wav
+2025-03-28 12:35:27,897 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-28 12:35:27,897 - root - INFO - Transcribing chunk: c:\Users\hipra\OneDrive\Desktop\Projects\EduSense\edusense\backend_server\uploads\converted.wav_chunks\converted_003.wav
+2025-03-28 12:35:35,718 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/audio/transcriptions "HTTP/1.1 200 OK"
+2025-03-28 12:35:35,757 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 12:35:35] "POST /transcribe HTTP/1.1" 200 -
+2025-03-28 12:36:01,865 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-28 12:36:01,901 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 12:36:01] "POST /generate_mini_lecture/39 HTTP/1.1" 200 -
+2025-03-28 12:36:24,721 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 12:36:24] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 12:37:14,915 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 12:37:14] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 12:37:39,428 - werkzeug - INFO - 172.29.50.178 - - [28/Mar/2025 12:37:39] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 12:37:42,063 - werkzeug - INFO - 172.29.50.178 - - [28/Mar/2025 12:37:42] "GET /mini_lecture/39 HTTP/1.1" 200 -
+2025-03-28 13:00:03,759 - werkzeug - INFO - 172.29.49.222 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,764 - werkzeug - INFO - 172.29.49.222 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,773 - werkzeug - INFO - 172.29.52.12 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,782 - werkzeug - INFO - 172.29.49.235 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,782 - werkzeug - INFO - 172.29.52.244 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,804 - werkzeug - INFO - 172.29.49.235 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,816 - werkzeug - INFO - 172.29.50.178 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,817 - werkzeug - INFO - 172.29.52.12 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,819 - werkzeug - INFO - 172.29.52.244 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,825 - werkzeug - INFO - 172.29.53.80 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,831 - werkzeug - INFO - 172.29.51.131 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,832 - werkzeug - INFO - 172.29.50.178 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,835 - werkzeug - INFO - 172.29.53.80 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,837 - werkzeug - INFO - 172.29.51.131 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,839 - werkzeug - INFO - 172.29.50.178 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,844 - werkzeug - INFO - 172.29.50.178 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,847 - werkzeug - INFO - 172.29.49.222 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,849 - werkzeug - INFO - 172.29.52.244 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,852 - werkzeug - INFO - 172.29.50.178 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:03,852 - werkzeug - INFO - 172.29.52.244 - - [28/Mar/2025 13:00:03] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:06,196 - werkzeug - INFO - 172.28.15.180 - - [28/Mar/2025 13:00:06] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:06,311 - werkzeug - INFO - 172.29.52.244 - - [28/Mar/2025 13:00:06] "GET /mini_lecture/39 HTTP/1.1" 200 -
+2025-03-28 13:00:06,564 - werkzeug - INFO - 172.29.49.235 - - [28/Mar/2025 13:00:06] "GET /mini_lecture/39 HTTP/1.1" 200 -
+2025-03-28 13:00:08,121 - werkzeug - INFO - 172.29.50.178 - - [28/Mar/2025 13:00:08] "GET /mini_lecture/39 HTTP/1.1" 200 -
+2025-03-28 13:00:11,078 - werkzeug - INFO - 172.28.15.180 - - [28/Mar/2025 13:00:11] "GET /mini_lecture/39 HTTP/1.1" 200 -
+2025-03-28 13:00:11,563 - werkzeug - INFO - 172.29.51.131 - - [28/Mar/2025 13:00:11] "GET /mini_lecture/39 HTTP/1.1" 200 -
+2025-03-28 13:00:12,333 - werkzeug - INFO - 172.29.49.222 - - [28/Mar/2025 13:00:12] "GET /mini_lecture/39 HTTP/1.1" 200 -
+2025-03-28 13:00:35,045 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 13:00:35] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:00:39,934 - werkzeug - INFO - 172.29.52.12 - - [28/Mar/2025 13:00:39] "GET /mini_lecture/39 HTTP/1.1" 200 -
+2025-03-28 13:01:01,061 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 13:01:01] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:01:30,748 - werkzeug - INFO - 172.29.53.80 - - [28/Mar/2025 13:01:30] "GET /mini_lecture/39 HTTP/1.1" 200 -
+2025-03-28 13:01:31,374 - werkzeug - INFO - 172.29.55.174 - - [28/Mar/2025 13:01:31] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:01:37,473 - werkzeug - INFO - 172.28.15.180 - - [28/Mar/2025 13:01:37] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:02:12,421 - werkzeug - INFO - 172.29.49.222 - - [28/Mar/2025 13:02:12] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:02:39,455 - werkzeug - INFO - 172.29.49.235 - - [28/Mar/2025 13:02:39] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:03:04,081 - werkzeug - INFO - 172.29.52.12 - - [28/Mar/2025 13:03:04] "GET /transcripts HTTP/1.1" 200 -
+2025-03-28 13:03:27,213 - werkzeug - INFO - 172.29.51.131 - - [28/Mar/2025 13:03:27] "GET /transcripts HTTP/1.1" 200 -

@@ -6,7 +6,7 @@ import '../../services/api/mini_lecture_api.dart';
 class MiniLectureScreen extends StatefulWidget {
   final int transcriptId;
 
-  const MiniLectureScreen({Key? key, required this.transcriptId}) : super(key: key);
+  const MiniLectureScreen({super.key, required this.transcriptId});
 
   @override
   _MiniLectureScreenState createState() => _MiniLectureScreenState();
