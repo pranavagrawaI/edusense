@@ -81,7 +81,7 @@ class TranscriptCard extends StatelessWidget {
                           ),
                         ),
                         onPressed: onViewMiniLecture,
-                      ) 
+                      ),
                   ],
                 ),
               ],

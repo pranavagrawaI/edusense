@@ -3,18 +3,12 @@ import 'package:flutter/material.dart';
 class LectureBadge extends StatelessWidget {
   final bool isLocalLecture;
 
-  const LectureBadge({
-    super.key,
-    required this.isLocalLecture,
-  });
+  const LectureBadge({super.key, required this.isLocalLecture});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: 4,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
         borderRadius: BorderRadius.circular(12),
@@ -41,4 +35,4 @@ class LectureBadge extends StatelessWidget {
       ),
     );
   }
-} 
+}

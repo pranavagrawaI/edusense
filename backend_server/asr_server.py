@@ -3,8 +3,9 @@ import json
 import sqlite3
 import logging
 import subprocess
+import shutil
 from datetime import datetime
-from typing import Tuple, Dict, Optional, Union
+from typing import Tuple, Dict, Optional, Union, List
 from flask import Flask, request, jsonify
 from flask_limiter import Limiter
 from werkzeug.utils import secure_filename
@@ -22,6 +23,7 @@ if not OPENAI_API_KEY or not FLASK_SECRET_KEY:
 
 SERVER_HOST = os.getenv('SERVER_HOST', '0.0.0.0')
 SERVER_PORT = int(os.getenv('SERVER_PORT', '5000'))
+# Set an upload size limit (adjust if needed)
 MAX_FILE_SIZE = int(os.getenv('MAX_FILE_SIZE', '16777216'))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, os.getenv('UPLOAD_FOLDER', 'uploads'))
@@ -50,7 +52,7 @@ logging.basicConfig(
     ]
 )
 
-# Load the and initialize the OpenAI client
+# Initialize OpenAI client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 def init_db() -> None:
@@ -78,7 +80,6 @@ def init_mini_lecture_db() -> None:
             )
         ''')
 
-
 init_db()
 init_mini_lecture_db()
 
@@ -98,26 +99,79 @@ def validate_upload_file(file) -> Optional[Tuple[Dict, int]]:
     if file.tell() > MAX_FILE_SIZE:
         return {"error": "File size exceeds limit"}, 413
     file.seek(0)
-
     return None
 
 def convert_audio_to_wav(input_path: str, output_path: str) -> None:
-    """Convert the input audio file to WAV format using FFmpeg."""
+    """Convert the input audio file to WAV format with OpenAI-friendly specs."""
     ffmpeg_cmd = [
         FFMPEG_PATH, '-y', '-i', input_path,
         '-acodec', 'pcm_s16le', '-ar', '16000', '-ac', '1',
         output_path,
         '-hide_banner', '-loglevel', 'error'
     ]
-    subprocess.run(
-        ffmpeg_cmd,
-        stderr=subprocess.PIPE,
-        text=True,
-        check=True
-    )
+    subprocess.run(ffmpeg_cmd, stderr=subprocess.PIPE, text=True, check=True)
+
+def split_audio(input_path: str, output_dir: str, chunk_duration_sec: int = 300) -> None:
+    """
+    Split the WAV file into smaller chunks.
+    :param input_path: Path to the WAV file.
+    :param output_dir: Directory where chunk files will be saved.
+    :param chunk_duration_sec: Duration of each chunk in seconds.
+    """
+    os.makedirs(output_dir, exist_ok=True)
+    base_name = os.path.splitext(os.path.basename(input_path))[0]
+    output_pattern = os.path.join(output_dir, f"{base_name}_%03d.wav")
+    ffmpeg_cmd = [
+        FFMPEG_PATH, '-i', input_path,
+        '-f', 'segment',
+        '-segment_time', str(chunk_duration_sec),
+        '-c', 'copy',
+        output_pattern
+    ]
+    subprocess.run(ffmpeg_cmd, check=True)
+
+def transcribe_chunk(file_path: str) -> str:
+    """Transcribe a single audio chunk using the OpenAI API."""
+    with open(file_path, 'rb') as audio_file:
+        result = client.audio.transcriptions.create(
+            model="whisper-1",
+            file=audio_file,
+            response_format="json"
+        )
+    return result.text.strip()
+
+def combine_transcripts(transcript_list: List[str]) -> str:
+    """Combine a list of transcript strings into a single transcript."""
+    return '\n'.join(transcript_list)
+
+def transcribe_large_audio(file_path: str, chunk_duration_sec: int = 300) -> str:
+    """
+    Split a large audio file into chunks, transcribe each, and combine the transcripts.
+    :param file_path: Path to the converted WAV file.
+    :param chunk_duration_sec: Duration of each chunk in seconds.
+    :return: The complete transcript as a string.
+    """
+    # Create a temporary directory for the audio chunks
+    chunks_dir = file_path + "_chunks"
+    split_audio(file_path, chunks_dir, chunk_duration_sec)
+    
+    transcripts = []
+    # Sort chunk files to ensure correct order
+    chunk_files = sorted(os.listdir(chunks_dir))
+    for fname in chunk_files:
+        chunk_path = os.path.join(chunks_dir, fname)
+        logging.info(f"Transcribing chunk: {chunk_path}")
+        text = transcribe_chunk(chunk_path)
+        transcripts.append(text)
+    
+    full_transcript = combine_transcripts(transcripts)
+    
+    # Cleanup temporary chunks
+    shutil.rmtree(chunks_dir, ignore_errors=True)
+    return full_transcript
 
 def cleanup_files(*paths: str) -> None:
-    """Attempt to remove provided file paths."""
+    """Attempt to remove the specified file paths."""
     for path in paths:
         try:
             if os.path.exists(path):
@@ -128,7 +182,11 @@ def cleanup_files(*paths: str) -> None:
 @app.route('/transcribe', methods=['POST'])
 @limiter.limit(RATE_LIMIT_TRANSCRIBE)
 def transcribe() -> Union[tuple, str]:
-    """Handle audio file upload and transcription."""
+    """
+    Handle audio file uploads and perform transcription.
+    The audio is first converted to WAV, then split into smaller chunks.
+    Each chunk is transcribed via the OpenAI API, and the results are combined.
+    """
     if 'file' not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
 
@@ -157,16 +215,8 @@ def transcribe() -> Union[tuple, str]:
             app.logger.error(f"FFmpeg not found at {FFMPEG_PATH}")
             return jsonify({"error": "FFmpeg executable not found"}), 500
 
-        abs_converted_path = os.path.abspath(converted_path)
-        
-        with open(abs_converted_path, 'rb') as audio_file:
-            result = client.audio.transcriptions.create(
-            model="whisper-1",
-            file=audio_file,
-            response_format="json"
-            )
-
-        transcription = result.text.strip()
+        # Transcribe the converted audio in chunks
+        transcription = transcribe_large_audio(converted_path, chunk_duration_sec=300)
 
         transcript_id = None
         if transcription:
@@ -190,7 +240,7 @@ def transcribe() -> Union[tuple, str]:
 
 @app.route('/transcripts', methods=['GET'])
 def get_transcripts() -> str:
-    """Fetch all transcripts along with their lecture status."""
+    """Fetch all transcripts along with their mini-lecture status."""
     try:
         with sqlite3.connect(DB_PATH) as conn:
             cursor = conn.cursor()
@@ -216,7 +266,7 @@ def get_transcripts() -> str:
 
 def generate_mini_lecture(transcript_text: str) -> dict:
     """
-    Generate a mini-lecture (abstract, key topics, and MCQs) from a transcript using OpenAI.
+    Generate a mini-lecture (abstract, key topics, and MCQs) based on the transcript using OpenAI.
     Returns a dictionary with keys: 'abstract', 'key_topics', and 'mcqs'.
     """
     prompt = f"""
@@ -226,7 +276,7 @@ Based on the following lecture transcript, generate a mini-lecture with the foll
 2. Key Topics & Explanations: Identify the main topics and significant subtopics from the lecture. For each topic:
    - A one-sentence definition or overview.
    - 1–2 essential insights or critical points emphasized during the lecture.
-3. MCQs: Provide 2–3 multiple-choice questions. Each question must include:
+3. MCQs: Provide 4–5 multiple-choice questions. Each question must include:
    - The question text.
    - Four options (A, B, C, D) as plausible distractors.
    - The correct answer (A/B/C/D).
@@ -257,10 +307,9 @@ Return the mini-lecture in valid JSON with the following keys:
 Lecture Transcript:
 {transcript_text}
 """
-
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",  # Or whichever model you prefer
+            model="gpt-4o",  # Use your preferred model
             response_format={"type": "json_object"},
             messages=[
                 {
@@ -274,28 +323,22 @@ Lecture Transcript:
             ],
             temperature=0.7,
         )
-
         content = response.choices[0].message.content
-
-        # Attempt to parse the content as JSON
         return json.loads(content)
     except Exception as e:
         logging.error(f"Error generating mini-lecture: {e}")
         raise
-
 
 @app.route('/generate_mini_lecture/<int:transcript_id>', methods=['POST'])
 @limiter.limit(RATE_LIMIT_LECTURE)
 def create_mini_lecture(transcript_id: int):
     """
     Generate a mini-lecture for the specified transcript.
-    Stores the mini-lecture JSON in the mini_lectures table
-    and returns the generated data to the client.
+    The mini-lecture JSON is stored in the database and returned to the client.
     """
     try:
         with sqlite3.connect(DB_PATH) as conn:
             cursor = conn.cursor()
-            # Fetch the transcript text
             cursor.execute('SELECT text FROM transcripts WHERE id = ?', (transcript_id,))
             result = cursor.fetchone()
 
@@ -303,11 +346,7 @@ def create_mini_lecture(transcript_id: int):
                 return jsonify({"error": "Transcript not found"}), 404
 
             transcript_text = result[0]
-            
-            # Generate the mini-lecture
             lecture_data = generate_mini_lecture(transcript_text)
-            
-            # Store it in the mini_lectures table as JSON
             cursor.execute(
                 'INSERT INTO mini_lectures (transcript_id, lecture_data) VALUES (?, ?)',
                 (transcript_id, json.dumps(lecture_data))
@@ -321,6 +360,28 @@ def create_mini_lecture(transcript_id: int):
     except Exception as e:
         logging.error(f"Error in mini-lecture generation endpoint: {e}", exc_info=True)
         return jsonify({"error": str(e)}), 500
+
+@app.route('/mini_lecture/<int:transcript_id>', methods=['GET'])
+def get_mini_lecture(transcript_id: int):
+    """Fetch the mini-lecture for the specified transcript."""
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                'SELECT lecture_data FROM mini_lectures WHERE transcript_id = ? ORDER BY timestamp DESC LIMIT 1',
+                (transcript_id,)
+            )
+            result = cursor.fetchone()
+            if result:
+                # Convert the stored JSON string back to a JSON object
+                lecture_data = json.loads(result[0])
+                return jsonify(lecture_data)
+            else:
+                return jsonify({"error": "Mini-lecture not found"}), 404
+    except Exception as e:
+        logging.error(f"Error fetching mini-lecture: {e}")
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/transcript/<int:transcript_id>', methods=['DELETE'])
 def delete_transcript(transcript_id: int) -> str:
