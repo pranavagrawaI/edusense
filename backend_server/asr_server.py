@@ -236,7 +236,7 @@ def transcribe() -> Union[tuple, str]:
         app.logger.error(f"Processing failed: {e}")
         return jsonify({"error": f"Processing error: {e}"}), 500
     finally:
-        cleanup_files(file_path, converted_path)
+        cleanup_files(converted_path)
 
 @app.route('/transcripts', methods=['GET'])
 def get_transcripts() -> str:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../models/mini_lecture.dart';
 import '../../services/storage/mini_lecture_storage.dart';
 import '../../services/api/mini_lecture_api.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MiniLectureScreen extends StatefulWidget {
   final int transcriptId;
@@ -16,12 +17,14 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
   MiniLecture? miniLecture;
   bool isLoading = false;
 
-  // Track the user’s selected answer for each MCQ: [questionIndex -> 'A'/'B'/'C'/'D']
+  // Track the user's selected answer for each MCQ: [questionIndex -> 'A'/'B'/'C'/'D']
   Map<int, String> selectedAnswers = {};
 
   // Track whether the user has clicked "Check Answer" for each MCQ
   Map<int, bool> showAnswerForQuestion = {};
 
+  // Google Form URL
+  final Uri _googleFormUrl = Uri.parse('https://forms.gle/VKPUYjjoPRoGTjMBA'); 
   @override
   void initState() {
     super.initState();
@@ -67,6 +70,19 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
     }
   }
 
+  // Function to launch URL
+  Future<void> _launchUrl() async {
+    // Use the Uri object directly
+    if (!await launchUrl(_googleFormUrl, mode: LaunchMode.externalApplication)) {
+      // Optionally show an error message if the URL can't be launched
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not launch $_googleFormUrl')),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,6 +117,19 @@ class _MiniLectureScreenState extends State<MiniLectureScreen> {
           _buildKeyTopicsSection(),
           const SizedBox(height: 24),
           _buildMcqSection(),
+          const SizedBox(height: 32),
+          // Feedback Button
+          Center(
+            child: ElevatedButton.icon(
+              icon: const Icon(Icons.feedback_outlined),
+              label: const Text('Provide Feedback'),
+              onPressed: _launchUrl,
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
         ],
       ),
     );
