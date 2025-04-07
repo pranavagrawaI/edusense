@@ -48,7 +48,7 @@ void main() async {
       foregroundServiceNotificationId: 888,
       initialNotificationTitle: 'EduSense Recording',
       initialNotificationContent: 'Recording in progress',
-    ),
+    ),  
     iosConfiguration: IosConfiguration(
       autoStart: false,
       onForeground: onStart,
