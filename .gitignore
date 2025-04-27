@@ -3,7 +3,7 @@
 .env
 *.env
 *.db
-uploads/
+backend_server/uploads/
 __pycache__/
 *.pyc
 *.log
