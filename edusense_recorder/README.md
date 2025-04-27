@@ -11,10 +11,9 @@ The EduSense Recorder App captures live classroom audio, processes it in real-ti
 
 ## ⚙️ Setup Instructions
 1. Install the Recorder App on a compatible classroom device.
-2. Connect to the EduSense platform via secure login.
-3. Ensure stable Wi-Fi connectivity for live streaming.
-4. Press "Start Recording" at the beginning of the lecture.
-5. Press "Stop Recording" once the session ends.
+2. Ensure stable Wi-Fi connectivity for live streaming.
+3. Press "Start Recording" at the beginning of the lecture.
+4. Press "Stop Recording" once the session ends.
 
 ## 🛡 Requirements
 - Android 9.0+ or compatible embedded device.
