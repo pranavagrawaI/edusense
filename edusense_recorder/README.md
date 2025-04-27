@@ -1,16 +1,22 @@
-# edusense_recorder
+# EduSense Recorder App
 
-A new Flutter project.
+The EduSense Recorder App captures live classroom audio, processes it in real-time, and sends the data for transcription, summarization, and quiz generation.
 
-## Getting Started
+## 🚀 Features
+- High-quality, real-time audio capture.
+- Automatic upload to EduSense cloud platform.
+- Secure data transmission with backup buffering.
+- Minimal teacher interaction – one-click start and stop.
+- Background noise filtering for better ASR accuracy.
 
-This project is a starting point for a Flutter application.
+## ⚙️ Setup Instructions
+1. Install the Recorder App on a compatible classroom device.
+2. Connect to the EduSense platform via secure login.
+3. Ensure stable Wi-Fi connectivity for live streaming.
+4. Press "Start Recording" at the beginning of the lecture.
+5. Press "Stop Recording" once the session ends.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🛡 Requirements
+- Android 9.0+ or compatible embedded device.
+- Microphone access permission.
+- Stable internet connection (minimum 5 Mbps recommended).
