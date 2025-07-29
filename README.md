@@ -1,40 +1,42 @@
 # EduSense
 
-EduSense is a next-generation platform designed to enhance classroom learning by integrating artificial intelligence (AI) and Internet of Things (IoT) technologies directly into the teaching process. It transforms traditional lectures into dynamic, personalized learning experiences by:
+EduSense is a real-time AI+IoT platform that augments live classroom teaching by autonomously generating structured educational content—summaries, key concepts, and quizzes—from lecture audio. Designed for minimal classroom disruption and maximum learning impact, EduSense brings intelligence and adaptability to traditional education.
 
-- Capturing real-time classroom audio
-- Transcribing lectures using AI-powered speech recognition
-- Extracting key concepts through natural language processing (NLP)
-- Generating mini-lectures, quizzes, and dynamic summaries
-- Facilitating real-time feedback between students and teachers
+## 🎯 Objectives
 
-EduSense bridges the gap between traditional education and the digital future by making education more accessible, intelligent, and adaptive.
+EduSense aims to:
 
-## 🚀 Features
+- Enhance student comprehension and retention through real-time content generation.
+- Support teachers with automated feedback and pedagogical insights.
+- Operate as a lightweight, deployable system that integrates seamlessly with classroom routines.
 
-- Real-Time Audio Capture: Seamlessly records lectures using high-quality sensors.
-- AI-Driven Transcription & Summarization: Automatically generates lecture notes, quizzes, and additional materials.
-- Student Feedback Loop: Enables students to ask questions and submit feedback instantly.
-- Teacher Insights: Provides real-time data on student engagement and understanding.
-- IoT Classroom Integration: Merges physical and digital education environments.
+## 🔧 System Overview
 
-## 📈 Current Progress
+The system consists of:
 
-- Core app functionalities (audio capture, transcription, NLP, quiz generation) are nearly complete.
-- Successful integration of real-time data processing with IoT devices.
-- Preliminary testing underway for ASR accuracy and system responsiveness.
+- **Audio Capture**: Records lectures using built-in or external microphones.
+- **Speech Recognition**: Uses Whisper ASR for high-fidelity transcription (WER: 2.8–5.0%).
+- **Natural Language Processing**: Applies GPT-based models to extract key concepts and generate mini-lectures with dynamic summaries and MCQs.
+- **Mobile App Interface**: Displays content to students and logs feedback.
+- **Offline Syncing**: Operates in low-connectivity environments and syncs when online.
 
-## 🛠 Next Steps
+## 📊 Evaluation Highlights
 
-- Conduct extensive real-world classroom testing.
-- Integrate feedback from students and educators.
-- Refine usability based on pilot results.
-- Publish findings to contribute to the field of educational technology.
+- **Semantic Fidelity**: BERTScore F1 > 0.94 across summaries and quizzes.
+- **User Ratings**: Students rated EduSense >4.2/5 on comprehension, usability, and usefulness.
+- **Reliability**: Smooth deployment across five IoT-focused lectures with 17 undergraduates.
 
-## 🧠 Research Questions
+## 🔬 Research Contribution
 
-- Does EduSense improve student knowledge retention compared to traditional lectures?
-- How accurate and useful are the AI-generated contents (notes, quizzes)?
-- What are the experiences of students and teachers using EduSense?
-- How technically reliable is the platform in classroom settings?
+EduSense demonstrates that lightweight, real-time AI integration into live classrooms is both technically feasible and pedagogically impactful, bridging a key research gap in educational AI. It combines objective metrics (WER, BERTScore) with subjective evaluations (Likert-scale surveys) to assess its effectiveness.
 
+## 🛠 Future Directions
+
+- Longitudinal studies on academic retention and performance.
+- Expansion across disciplines, languages, and class sizes.
+- On-device inference for lower latency and improved privacy.
+- Richer content via multimodal inputs (slides, textbooks, video).
+
+## 📚 Citation
+
+Agrawal, P. (2025). *EduSense: Evaluating AI for Augmenting Live Classroom Teaching*. IISER Bhopal.
